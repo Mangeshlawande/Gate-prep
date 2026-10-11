@@ -39,12 +39,12 @@ interface ChatMessage {
 }
 
 const STARTER_PROMPTS = [
-  "How to calculate TLB Effective Memory Access Time (EMAT)?",
-  "Master Theorem edge cases when f(n) contains log",
-  "Best standard textbooks & resources for Computer Networks",
-  "Prerequisites for B-Trees and Normal Forms in DBMS",
-  "Common NAT traps in IP Fragmentation offset calculation",
-  "How to minimize DFA states with Myhill-Nerode theorem?"
+  "Target NAT questions on Virtual Memory and TLB EMAT",
+  "Target MSQ questions on Theory of Computation closure properties",
+  "Target NAT questions on Cache Tag bits and Set Associativity",
+  "Extended Master Theorem edge cases with target MCQ",
+  "Best clarity resources and target MSQ for BCNF in DBMS",
+  "Target NAT questions on IP Fragmentation and Offset"
 ];
 
 export const GateBot: React.FC = () => {
@@ -793,19 +793,105 @@ export const GateBot: React.FC = () => {
               {selectedNode ? (
                 <div className="p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-cyan-500/50 shadow-xl space-y-4 font-mono text-xs">
                   <div>
-                    <span className="text-[10px] uppercase px-2 py-0.5 rounded bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 font-bold border border-cyan-300 dark:border-cyan-800">
-                      {selectedNode.label} Details
-                    </span>
-                    <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100 mt-2">
+                    <div className="flex items-center gap-2 mb-1.5">
+                      <span className="text-[10px] uppercase px-2 py-0.5 rounded bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 font-bold border border-cyan-300 dark:border-cyan-800">
+                        {selectedNode.label} Details
+                      </span>
+                      {selectedNode.properties.questionTaxonomy && (
+                        <span className="text-[10px] uppercase px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-bold border border-amber-300 dark:border-amber-800">
+                          {selectedNode.properties.questionTaxonomy.primaryType} • {selectedNode.properties.questionTaxonomy.frequency}
+                        </span>
+                      )}
+                    </div>
+                    <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-100">
                       {selectedNode.name}
                     </h3>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 font-sans mt-1">
                       {selectedNode.properties.description}
                     </p>
+                    {selectedNode.properties.questionTaxonomy?.typicalFormat && (
+                      <p className="text-[11px] text-cyan-700 dark:text-cyan-400 font-mono mt-1 font-semibold">
+                        Format: {selectedNode.properties.questionTaxonomy.typicalFormat}
+                      </p>
+                    )}
                   </div>
 
+                  {/* Target Questions By Exam Type (MCQ / MSQ / NAT) */}
+                  {selectedNode.properties.targetQuestions && selectedNode.properties.targetQuestions.length > 0 && (
+                    <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-zinc-800">
+                      <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 block">
+                        🎯 TARGET EXAM QUESTIONS ({selectedNode.properties.targetQuestions.length}):
+                      </span>
+                      <div className="space-y-2 max-h-56 overflow-y-auto pr-1">
+                        {selectedNode.properties.targetQuestions.map((q: any) => (
+                          <div
+                            key={q.id}
+                            className="p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-[11px] space-y-1.5"
+                          >
+                            <div className="flex items-center justify-between gap-1">
+                              <span className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${
+                                q.questionType === 'MCQ'
+                                  ? 'bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300'
+                                  : q.questionType === 'MSQ'
+                                  ? 'bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300'
+                                  : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'
+                              }`}>
+                                {q.questionType} • {q.marks}M
+                              </span>
+                              <span className="text-[10px] text-zinc-400">{q.testedYear || 'Official'}</span>
+                            </div>
+                            <p className="font-semibold text-zinc-800 dark:text-zinc-200 font-sans">{q.title}</p>
+                            <p className="text-zinc-600 dark:text-zinc-400 font-sans line-clamp-2">{q.problemStatement}</p>
+                            <div className="pt-1 border-t border-slate-200 dark:border-zinc-800/80 flex items-center justify-between text-[10px]">
+                              <span className="text-emerald-600 dark:text-emerald-400 font-bold">Ans: {q.correctAnswer}</span>
+                              <span className="text-amber-600 dark:text-amber-400 truncate max-w-[150px]">Trap: {q.trapExplanation}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Direct Clarity Resources */}
+                  {selectedNode.properties.clarityResources && selectedNode.properties.clarityResources.length > 0 && (
+                    <div className="space-y-2 pt-2 border-t border-slate-200 dark:border-zinc-800">
+                      <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 block">
+                        📚 DIRECT CLARITY RESOURCES ({selectedNode.properties.clarityResources.length}):
+                      </span>
+                      <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
+                        {selectedNode.properties.clarityResources.map((res: any, idx: number) => (
+                          <div
+                            key={idx}
+                            className="p-2 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-[11px] space-y-1"
+                          >
+                            <div className="flex items-center justify-between gap-1">
+                              <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300">
+                                {res.type}
+                              </span>
+                              {res.url && (
+                                <a
+                                  href={res.url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="text-[10px] text-cyan-600 dark:text-cyan-400 hover:underline inline-flex items-center gap-0.5"
+                                >
+                                  Open <ExternalLink className="w-2.5 h-2.5" />
+                                </a>
+                              )}
+                            </div>
+                            <p className="font-bold text-zinc-800 dark:text-zinc-200">{res.title}</p>
+                            <p className="text-[10px] text-zinc-500">{res.chapterOrTopic}</p>
+                            <p className="text-[10px] text-zinc-600 dark:text-zinc-400 font-sans italic">
+                              "{res.clarityNotes}"
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
                   {/* Prerequisites Chain */}
-                  <div>
+                  <div className="pt-2 border-t border-slate-200 dark:border-zinc-800">
                     <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 block mb-1">
                       🔗 PREREQUISITES (Must know before this):
                     </span>
@@ -826,7 +912,7 @@ export const GateBot: React.FC = () => {
                   </div>
 
                   {/* Downstream Topics Unlocked */}
-                  <div>
+                  <div className="pt-2 border-t border-slate-200 dark:border-zinc-800">
                     <span className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 block mb-1">
                       🚀 UNLOCKS ADVANCED TOPICS:
                     </span>

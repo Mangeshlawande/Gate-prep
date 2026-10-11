@@ -13,68 +13,66 @@ export interface BotResponse {
   prerequisites: GraphNode[];
   formulas: GraphNode[];
   resources: GraphNode[];
+  targetQuestions: any[];
+  clarityResources: any[];
   traps: string[];
   suggestedFollowUps: string[];
 }
 
 export class GateBotEngine {
   constructor() {
-    // Ensure databases are populated
     initializeKnowledgeBases();
   }
 
-  /**
-   * Main Hybrid Graph-RAG Retrieval & Generation pipeline
-   */
   public async ask(userQuery: string): Promise<BotResponse> {
     initializeKnowledgeBases();
 
     const cleanQuery = userQuery.trim();
     if (!cleanQuery) {
       return {
-        answer: "Please ask a question about GATE CS concepts, problem solving, formulas, prerequisites, or recommended study resources.",
+        answer: "Please ask a question about GATE CS concepts, target questions (MCQ/MSQ/NAT), problem solving, formulas, prerequisites, or recommended clarity study resources.",
         retrievedVectors: [],
         graphNodes: [],
         graphEdges: [],
         prerequisites: [],
         formulas: [],
         resources: [],
+        targetQuestions: [],
+        clarityResources: [],
         traps: [],
         suggestedFollowUps: [
-          "How to calculate TLB Effective Memory Access Time (EMAT)?",
-          "What are the best standard textbooks for Computer Networks?",
-          "Explain Master Theorem divide & conquer edge cases",
-          "Prerequisites for BCNF and Normalization"
+          "Target NAT questions on Virtual Memory and TLB EMAT",
+          "Target MSQ questions on Theory of Computation closure properties",
+          "Extended Master Theorem edge cases and target MCQ",
+          "Best clarity resources for BCNF and Normalization"
         ]
       };
     }
 
     // Step 1: Vector Search (Semantic Retrieval)
     const vectorMatches = globalVectorDb.search(cleanQuery, {
-      topK: 5,
-      minScore: 0.08
+      topK: 6,
+      minScore: 0.06
     });
 
     // Step 2: Graph Extraction (Entity & Dependency Discovery)
     const matchedNodeIds = new Set<string>();
     const matchedNodes: GraphNode[] = [];
 
-    // Match by direct name search in graph
     const queryLower = cleanQuery.toLowerCase();
     for (const node of globalGraphDb.getAllNodes()) {
       if (
         queryLower.includes(node.name.toLowerCase()) ||
         node.name.toLowerCase().includes(queryLower) ||
-        (node.properties.tags && node.properties.tags.some((t: string) => queryLower.includes(t.toLowerCase())))
+        (node.properties.tags && node.properties.tags.some((t: string) => queryLower.includes(t.toLowerCase()))) ||
+        (node.properties.subject && queryLower.includes(node.properties.subject.toLowerCase()))
       ) {
         matchedNodeIds.add(node.id);
         matchedNodes.push(node);
       }
     }
 
-    // Also match nodes corresponding to top vector hits
     for (const hit of vectorMatches) {
-      // If hit has corresponding graph node
       const potentialNodeId = hit.doc.id.replace('vec-', '');
       const node = globalGraphDb.getNode(potentialNodeId) || globalGraphDb.getNode(hit.doc.id);
       if (node && !matchedNodeIds.has(node.id)) {
@@ -87,6 +85,8 @@ export class GateBotEngine {
     const allPrereqs: GraphNode[] = [];
     const allFormulas: GraphNode[] = [];
     const allResources: GraphNode[] = [];
+    const allTargetQuestions: any[] = [];
+    const allClarityResources: any[] = [];
     const allTraps: string[] = [];
     const collectedEdges: GraphEdge[] = [];
 
@@ -109,12 +109,29 @@ export class GateBotEngine {
         if (!allResources.some((x) => x.id === r.id)) allResources.push(r);
       }
 
-      // 4. Memory Traps
+      // 4. Topic Target Questions (MCQ, MSQ, NAT)
+      if (node.properties.targetQuestions && Array.isArray(node.properties.targetQuestions)) {
+        for (const tq of node.properties.targetQuestions) {
+          if (!allTargetQuestions.some((q) => q.id === tq.id)) {
+            allTargetQuestions.push(tq);
+          }
+        }
+      }
+
+      // 5. Clarity Resources
+      if (node.properties.clarityResources && Array.isArray(node.properties.clarityResources)) {
+        for (const cr of node.properties.clarityResources) {
+          if (!allClarityResources.some((r) => r.title === cr.title)) {
+            allClarityResources.push(cr);
+          }
+        }
+      }
+
+      // 6. Memory Traps
       if (node.properties.examTrap) {
         allTraps.push(node.properties.examTrap);
       }
 
-      // Edges around this node
       const neighbors = globalGraphDb.getNeighbors(node.id, 'both');
       for (const n of neighbors) {
         if (!collectedEdges.some((e) => e.id === n.edge.id)) {
@@ -138,13 +155,13 @@ export class GateBotEngine {
       allPrereqs,
       allFormulas,
       allResources,
+      allTargetQuestions,
+      allClarityResources,
       allTraps
     );
 
-    // Step 5: Suggested follow-ups based on context
     const suggestedFollowUps = this.generateFollowUps(matchedNodes, allPrereqs);
 
-    // Combined unique nodes
     const combinedNodesMap = new Map<string, GraphNode>();
     for (const n of [...matchedNodes, ...allPrereqs, ...allFormulas, ...allResources]) {
       combinedNodesMap.set(n.id, n);
@@ -158,14 +175,13 @@ export class GateBotEngine {
       prerequisites: allPrereqs,
       formulas: allFormulas,
       resources: allResources,
+      targetQuestions: allTargetQuestions,
+      clarityResources: allClarityResources,
       traps: Array.from(new Set(allTraps)),
       suggestedFollowUps
     };
   }
 
-  /**
-   * Generates a pedagogical, clear, step-by-step answer combining Vector DB content & Graph DB facts
-   */
   private synthesizeAnswer(
     query: string,
     vectorHits: SearchResult[],
@@ -173,11 +189,12 @@ export class GateBotEngine {
     prereqs: GraphNode[],
     formulas: GraphNode[],
     resources: GraphNode[],
+    targetQuestions: any[],
+    clarityResources: any[],
     traps: string[]
   ): string {
     const lines: string[] = [];
 
-    // Header / Subject Context
     const primarySubject =
       matchedNodes[0]?.properties.subject ||
       vectorHits[0]?.doc.metadata.subject ||
@@ -185,14 +202,14 @@ export class GateBotEngine {
 
     lines.push(`### 💡 Conceptual Guide: ${primarySubject}\n`);
 
-    // Section 1: Core Guidance / Explanation
+    // Section 1: Core Guidance & Conceptual Breakdown
     if (vectorHits.length > 0) {
       const topHit = vectorHits[0];
       lines.push(`**Key Concept:**`);
       lines.push(`${topHit.doc.content}\n`);
 
       if (vectorHits.length > 1) {
-        lines.push(`**Key Mathematical & Architectural Details:**`);
+        lines.push(`**Key Mathematical & Architectural Insights:**`);
         for (let i = 1; i < Math.min(3, vectorHits.length); i++) {
           lines.push(`- **${vectorHits[i].doc.title}**: ${vectorHits[i].doc.content}`);
         }
@@ -208,7 +225,7 @@ export class GateBotEngine {
     // Section 2: Prerequisite Knowledge Graph Chain
     if (prereqs.length > 0) {
       lines.push(`\n#### 🔗 Prerequisite Knowledge Chain (from Graph DB)`);
-      lines.push(`Before solving advanced PYQs on this topic, ensure you have mastered these fundamental building blocks:`);
+      lines.push(`Before solving advanced PYQs on this topic, ensure you have mastered these fundamental dependencies:`);
       for (const p of prereqs) {
         lines.push(`- **${p.name}** (${p.properties.subject || 'Fundamental'}): ${p.properties.description || 'Core requirement'}`);
       }
@@ -223,8 +240,47 @@ export class GateBotEngine {
       }
     }
 
-    // Section 4: Recommended Standard Textbooks & Practice Links
-    if (resources.length > 0) {
+    // Section 4: TARGET EXAM QUESTIONS (BY QUESTION TYPE: MCQ, MSQ, NAT)
+    if (targetQuestions.length > 0) {
+      lines.push(`\n#### 🎯 Target Practice Questions By Exam Type (MCQ / MSQ / NAT)`);
+      for (const q of targetQuestions.slice(0, 3)) {
+        const typeBadge =
+          q.questionType === 'MCQ'
+            ? '📝 Multiple Choice Question (MCQ - Single Correct, Negative Marking 1/3)'
+            : q.questionType === 'MSQ'
+            ? '☑️ Multiple Select Question (MSQ - Multiple Correct, ZERO Partial Marks)'
+            : '🔢 Numerical Answer Type (NAT - Exact Numeric / Range, No Negative Marking)';
+
+        lines.push(`**[${q.questionType} • ${q.marks} Marks] ${q.title}** (${q.testedYear || 'Official GATE Pattern'})`);
+        lines.push(`*Type:* ${typeBadge}`);
+        lines.push(`\n**Problem:**\n${q.problemStatement}`);
+
+        if (q.options && q.options.length > 0) {
+          lines.push('\n**Options:**');
+          for (const opt of q.options) {
+            lines.push(`- ${opt}`);
+          }
+        }
+
+        lines.push(`\n**Correct Answer:** \`${q.correctAnswer}\``);
+        lines.push(`\n**Step-by-Step Solution:**\n${q.stepByStepSolution}`);
+        if (q.trapExplanation) {
+          lines.push(`\n> [!WARNING]\n> **${q.questionType} Specific Trap:** ${q.trapExplanation}`);
+        }
+        lines.push('\n---');
+      }
+    }
+
+    // Section 5: DIRECT CLARITY RESOURCES & REFERENCE GUIDES
+    if (clarityResources.length > 0) {
+      lines.push(`\n#### 📚 Direct Clarity Resources & Reference Guides`);
+      for (const r of clarityResources) {
+        const directLink = r.url ? `([Direct Study Link](${r.url}))` : '';
+        lines.push(`- **[${r.type}] ${r.title}** ${directLink}`);
+        lines.push(`  *Section / Chapter:* **${r.chapterOrTopic}**`);
+        lines.push(`  *Clarity Study Guidance:* ${r.clarityNotes}`);
+      }
+    } else if (resources.length > 0) {
       lines.push(`\n#### 📚 Recommended Standard Resources & Action Links`);
       for (const r of resources) {
         const link = r.properties.url ? `([Direct Link](${r.properties.url}))` : '';
@@ -233,16 +289,9 @@ export class GateBotEngine {
           lines.push(`  *${r.properties.description}*`);
         }
       }
-    } else {
-      // General textbook recommendation
-      const foundSubj = CORE_GATE_SUBJECTS.find((s) => s.name.toLowerCase().includes(primarySubject.toLowerCase()));
-      if (foundSubj) {
-        lines.push(`\n#### 📚 Recommended Standard Book`);
-        lines.push(`- **${foundSubj.name}**: Standard reference textbook is **${foundSubj.book}**.`);
-      }
     }
 
-    // Section 5: High-Frequency Exam Traps & Cognitive Error Alerts
+    // Section 6: High-Frequency Exam Traps & Cognitive Error Alerts
     if (traps.length > 0) {
       lines.push(`\n#### ⚠️ Critical GATE Exam Trap to Avoid`);
       for (const t of traps.slice(0, 2)) {
@@ -251,10 +300,11 @@ export class GateBotEngine {
       }
     }
 
-    // Section 6: Recommended Next Action
-    lines.push(`\n#### 🚀 Recommended Next Action`);
-    lines.push(`1. Solve **15-20 GateOverflow PYQs** exclusively in timed 3-minute exam mode.`);
-    lines.push(`2. If you make any arithmetic, sign, or boundary mistake, log it into your **Mistake Diary** to neutralize it permanently.`);
+    // Section 7: Recommended Next Action
+    lines.push(`\n#### 🚀 Recommended Action`);
+    lines.push(`1. Read the indicated textbook section above to solidify concepts.`);
+    lines.push(`2. Solve the target question types (MCQ, MSQ, NAT) in timed exam conditions.`);
+    lines.push(`3. Record any cognitive or arithmetic slip in your **Mistake Diary**.`);
 
     return lines.join('\n');
   }
