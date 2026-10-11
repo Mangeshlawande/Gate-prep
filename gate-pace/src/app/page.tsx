@@ -12,7 +12,8 @@ import {
   ArrowRight,
   ShieldCheck,
   Calendar,
-  Layers
+  Layers,
+  Bot
 } from 'lucide-react';
 
 export default function Home() {
@@ -56,6 +57,14 @@ export default function Home() {
               <BarChart2 className="w-3.5 h-3.5" />
               <span>Dashboard & Monitor</span>
             </Link>
+
+            <Link
+              href="/bot"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-zinc-800 hover:bg-cyan-50 dark:hover:bg-cyan-950 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-800 transition-colors font-bold"
+            >
+              <Bot className="w-3.5 h-3.5" />
+              <span>AI Guide Bot</span>
+            </Link>
           </div>
         </div>
 
@@ -76,6 +85,7 @@ export default function Home() {
             <Link href="/syllabus" className="hover:underline">Detailed Syllabus</Link>
             <Link href="/tasks" className="hover:underline">Daily Tasks</Link>
             <Link href="/dashboard" className="hover:underline">Monitoring Dashboard</Link>
+            <Link href="/bot" className="hover:underline text-cyan-600 dark:text-cyan-400 font-bold">AI Guide Bot</Link>
           </div>
         </div>
       </footer>

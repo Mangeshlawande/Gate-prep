@@ -12,8 +12,10 @@ import {
   CheckCircle2,
   AlertTriangle,
   Zap,
-  Calendar
+  Calendar,
+  Trophy
 } from 'lucide-react';
+import { getRankInfo } from '@/components/Navbar';
 
 export const AnalyticsDashboard: React.FC = () => {
   const {
@@ -60,6 +62,8 @@ export const AnalyticsDashboard: React.FC = () => {
 
   const delta = completedDaysCount - daysDiff;
   const velocityStatus = delta >= 1 ? 'AHEAD' : delta >= -1 ? 'ON_TRACK' : 'BEHIND';
+
+  const rank = getRankInfo(xp);
 
   // 2. Study Hours
   const totalStudyMinutes = studySessions.reduce((acc, s) => acc + s.durationMinutes, 0);
@@ -207,14 +211,20 @@ export const AnalyticsDashboard: React.FC = () => {
         </div>
 
         {/* KPI 4 */}
-        <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-5 shadow-lg">
-          <span className="text-xs font-mono text-zinc-500 block mb-1">STREAK & XP</span>
-          <div className="text-2xl font-bold font-mono text-amber-400">
-            {streakCount} Days <span className="text-sm text-zinc-400">({xp} XP)</span>
+        <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-5 shadow-lg flex flex-col justify-between">
+          <div>
+            <span className="text-xs font-mono text-zinc-500 block mb-1">STREAK & RANK TIER</span>
+            <div className="text-2xl font-bold font-mono text-amber-400">
+              {streakCount} Days <span className="text-sm font-normal text-zinc-400">({xp} XP)</span>
+            </div>
           </div>
-          <span className="text-[11px] font-mono text-zinc-500 mt-2 block">
-            Consistent daily execution multiplier
-          </span>
+          <div className="mt-3 pt-2.5 border-t border-zinc-800 flex items-center justify-between text-xs font-mono">
+            <span className={`font-semibold flex items-center gap-1.5 ${rank.color}`}>
+              <Trophy className="w-3.5 h-3.5" />
+              {rank.title}
+            </span>
+            <span className="text-[10px] text-zinc-500">Level {rank.level}</span>
+          </div>
         </div>
       </div>
 

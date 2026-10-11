@@ -170,25 +170,25 @@ export const PYQDrillLogger: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Section: Timed Drill Station */}
-      <div className="rounded-2xl bg-zinc-900/90 border border-cyan-950 p-6 shadow-xl relative overflow-hidden">
+      <div className="rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-cyan-950 p-6 shadow-xl relative overflow-hidden">
         {/* Glow corner */}
         <div className="absolute top-0 right-0 w-80 h-80 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 relative z-10">
           {/* Question Stopwatch Indicator */}
           <div className="flex flex-col sm:flex-row items-center gap-6 w-full lg:w-auto">
-            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-zinc-950 border border-zinc-800 min-w-[200px]">
+            <div className="flex flex-col items-center justify-center p-4 rounded-2xl bg-slate-100 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 min-w-[200px]">
               <span className="text-[11px] font-mono text-zinc-500 flex items-center gap-1 mb-1">
-                <Timer className="w-3.5 h-3.5 text-cyan-400" />
+                <Timer className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                 PYQ STOPWATCH
               </span>
               <div
                 className={`text-4xl font-mono font-black tracking-wider transition-colors ${
                   circuitBreakerTriggered
-                    ? 'text-rose-400 animate-bounce'
+                    ? 'text-rose-600 dark:text-rose-400 animate-bounce'
                     : warningTriggered
-                    ? 'text-amber-400 animate-pulse'
-                    : 'text-cyan-400'
+                    ? 'text-amber-600 dark:text-amber-400 animate-pulse'
+                    : 'text-cyan-600 dark:text-cyan-400'
                 }`}
               >
                 {formatSeconds(qSeconds)}
@@ -197,11 +197,11 @@ export const PYQDrillLogger: React.FC = () => {
               {/* Status Message */}
               <div className="text-[10px] font-mono mt-2 text-center">
                 {circuitBreakerTriggered ? (
-                  <span className="text-rose-400 font-bold">
+                  <span className="text-rose-600 dark:text-rose-400 font-bold">
                     ⚠️ 3:30+ CIRCUIT BREAKER! FLAG OR SKIP!
                   </span>
                 ) : warningTriggered ? (
-                  <span className="text-amber-400 font-semibold">
+                  <span className="text-amber-600 dark:text-amber-400 font-semibold">
                     ⏳ 2:00+ Soft Pacing Alert
                   </span>
                 ) : (
@@ -214,21 +214,21 @@ export const PYQDrillLogger: React.FC = () => {
                 {!isTimerRunning ? (
                   <button
                     onClick={handleStartTimer}
-                    className="px-3 py-1 rounded-lg bg-cyan-950 border border-cyan-700 text-cyan-300 text-xs font-mono font-bold hover:bg-cyan-900 transition-colors"
+                    className="px-3 py-1 rounded-lg bg-cyan-600 hover:bg-cyan-500 dark:bg-cyan-950 dark:hover:bg-cyan-900 border border-cyan-500 dark:border-cyan-700 text-white dark:text-cyan-300 text-xs font-mono font-bold transition-colors cursor-pointer"
                   >
                     Start
                   </button>
                 ) : (
                   <button
                     onClick={handlePauseTimer}
-                    className="px-3 py-1 rounded-lg bg-amber-950 border border-amber-700 text-amber-300 text-xs font-mono font-bold hover:bg-amber-900 transition-colors"
+                    className="px-3 py-1 rounded-lg bg-amber-500 hover:bg-amber-400 dark:bg-amber-950 dark:hover:bg-amber-900 border border-amber-400 dark:border-amber-700 text-zinc-950 dark:text-amber-300 text-xs font-mono font-bold transition-colors cursor-pointer"
                   >
                     Pause
                   </button>
                 )}
                 <button
                   onClick={handleResetTimer}
-                  className="px-3 py-1 rounded-lg bg-zinc-900 border border-zinc-700 text-zinc-400 text-xs font-mono hover:text-zinc-200 transition-colors"
+                  className="px-3 py-1 rounded-lg bg-slate-200 dark:bg-zinc-900 border border-slate-300 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400 text-xs font-mono hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors cursor-pointer"
                 >
                   Reset
                 </button>
@@ -238,7 +238,7 @@ export const PYQDrillLogger: React.FC = () => {
             {/* Question Details Input */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 flex-1">
               <div>
-                <label className="block text-[11px] font-mono text-zinc-400 mb-1">
+                <label className="block text-[11px] font-mono text-zinc-600 dark:text-zinc-400 mb-1">
                   QUESTION #
                 </label>
                 <input
@@ -247,36 +247,36 @@ export const PYQDrillLogger: React.FC = () => {
                   max={65}
                   value={qNumber}
                   onChange={(e) => setQNumber(Number(e.target.value))}
-                  className="w-full text-xs p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
+                  className="w-full text-xs p-2 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono text-zinc-400 mb-1">
+                <label className="block text-[11px] font-mono text-zinc-600 dark:text-zinc-400 mb-1">
                   TYPE
                 </label>
                 <select
                   value={qType}
                   onChange={(e) => setQType(e.target.value as 'MCQ' | 'MSQ' | 'NAT')}
-                  className="w-full text-xs p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
+                  className="w-full text-xs p-2 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
                 >
-                  <option value="MCQ">MCQ (-0.33 / -0.66)</option>
-                  <option value="MSQ">MSQ (No Neg)</option>
-                  <option value="NAT">NAT (No Neg)</option>
+                  <option value="MCQ" className="bg-white dark:bg-zinc-900">MCQ (-0.33 / -0.66)</option>
+                  <option value="MSQ" className="bg-white dark:bg-zinc-900">MSQ (No Neg)</option>
+                  <option value="NAT" className="bg-white dark:bg-zinc-900">NAT (No Neg)</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono text-zinc-400 mb-1">
+                <label className="block text-[11px] font-mono text-zinc-600 dark:text-zinc-400 mb-1">
                   SUBJECT
                 </label>
                 <select
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  className="w-full text-xs p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
+                  className="w-full text-xs p-2 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
                 >
                   {SUBJECT_LIST.map((s) => (
-                    <option key={s} value={s}>
+                    <option key={s} value={s} className="bg-white dark:bg-zinc-900">
                       {s}
                     </option>
                   ))}
@@ -284,7 +284,7 @@ export const PYQDrillLogger: React.FC = () => {
               </div>
 
               <div>
-                <label className="block text-[11px] font-mono text-zinc-400 mb-1">
+                <label className="block text-[11px] font-mono text-zinc-600 dark:text-zinc-400 mb-1">
                   SOURCE / YEAR
                 </label>
                 <input
@@ -292,7 +292,7 @@ export const PYQDrillLogger: React.FC = () => {
                   value={gateYear}
                   onChange={(e) => setGateYear(e.target.value)}
                   placeholder="e.g. 2024-Set1"
-                  className="w-full text-xs p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
+                  className="w-full text-xs p-2 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
                 />
               </div>
 
@@ -302,7 +302,7 @@ export const PYQDrillLogger: React.FC = () => {
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder="Topic / Trap Keyword (e.g. Pointers, Floyd Cycle, Peterson's Algo, LR Parsing)..."
-                  className="w-full text-xs p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
+                  className="w-full text-xs p-2 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono focus:outline-none focus:border-cyan-500"
                 />
               </div>
             </div>
@@ -315,46 +315,46 @@ export const PYQDrillLogger: React.FC = () => {
             </span>
             <button
               onClick={() => handleRecordQuestion('CORRECT_FIRST_TRY')}
-              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-600/70 text-emerald-300 font-mono text-xs font-bold transition-all shadow-[0_0_10px_rgba(16,185,129,0.2)]"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 dark:bg-emerald-950/80 dark:hover:bg-emerald-900 border border-emerald-500 dark:border-emerald-600/70 text-white dark:text-emerald-300 font-mono text-xs font-bold transition-all shadow-sm cursor-pointer"
             >
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> CORRECT (&lt;2m)
+              <CheckCircle2 className="w-3.5 h-3.5 text-white dark:text-emerald-400" /> CORRECT (&lt;2m)
             </button>
             <button
               onClick={() => handleRecordQuestion('CORRECT_SLOW')}
-              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-950/80 hover:bg-cyan-900 border border-cyan-600/70 text-cyan-300 font-mono text-xs font-bold transition-all"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 dark:bg-cyan-950/80 dark:hover:bg-cyan-900 border border-cyan-500 dark:border-cyan-600/70 text-white dark:text-cyan-300 font-mono text-xs font-bold transition-all shadow-sm cursor-pointer"
             >
-              <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" /> CORRECT (SLOW)
+              <CheckCircle2 className="w-3.5 h-3.5 text-white dark:text-cyan-400" /> CORRECT (SLOW)
             </button>
             <button
               onClick={() => handleRecordQuestion('INCORRECT')}
-              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-rose-950/80 hover:bg-rose-900 border border-rose-600/70 text-rose-300 font-mono text-xs font-bold transition-all"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 dark:bg-rose-950/80 dark:hover:bg-rose-900 border border-rose-500 dark:border-rose-600/70 text-white dark:text-rose-300 font-mono text-xs font-bold transition-all shadow-sm cursor-pointer"
             >
-              <XCircle className="w-3.5 h-3.5 text-rose-400" /> INCORRECT
+              <XCircle className="w-3.5 h-3.5 text-white dark:text-rose-400" /> INCORRECT
             </button>
             <button
               onClick={() => handleRecordQuestion('UNATTEMPTED_STUCK')}
-              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-amber-950/80 hover:bg-amber-900 border border-amber-600/70 text-amber-300 font-mono text-xs font-bold transition-all"
+              className="flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 dark:bg-amber-950/80 dark:hover:bg-amber-900 border border-amber-400 dark:border-amber-600/70 text-zinc-950 dark:text-amber-300 font-mono text-xs font-bold transition-all shadow-sm cursor-pointer"
             >
-              <HelpCircle className="w-3.5 h-3.5 text-amber-400" /> STUCK / SKIPPED
+              <HelpCircle className="w-3.5 h-3.5 text-zinc-950 dark:text-amber-400" /> STUCK / SKIPPED
             </button>
           </div>
         </div>
       </div>
 
       {/* Date Filter & Analytics Summary Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-zinc-900/80 border border-zinc-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl bg-white dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 shadow-sm">
         <div className="flex items-center gap-2">
-          <Calendar className="w-4 h-4 text-cyan-400" />
-          <span className="text-xs font-mono text-zinc-400">View Questions on Date:</span>
+          <Calendar className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+          <span className="text-xs font-mono text-zinc-600 dark:text-zinc-400">View Questions on Date:</span>
           <input
             type="date"
             value={filterDate}
             onChange={(e) => setFilterDate(e.target.value)}
-            className="text-xs px-2.5 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 font-mono focus:outline-none focus:border-cyan-500 cursor-pointer"
+            className="text-xs px-2.5 py-1 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 font-mono focus:outline-none focus:border-cyan-500 cursor-pointer"
           />
           <button
             onClick={() => setFilterDate('')}
-            className="text-xs text-cyan-400 hover:underline font-mono ml-2"
+            className="text-xs text-cyan-600 dark:text-cyan-400 hover:underline font-mono ml-2 cursor-pointer"
           >
             Show All
           </button>
@@ -362,27 +362,27 @@ export const PYQDrillLogger: React.FC = () => {
 
         {/* Accuracy and Count Pills */}
         <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
-          <span className="px-2.5 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-300">
-            Total: <strong className="text-cyan-400">{totalCount}</strong>
+          <span className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-300">
+            Total: <strong className="text-cyan-600 dark:text-cyan-400">{totalCount}</strong>
           </span>
-          <span className="px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-900 text-emerald-400">
+          <span className="px-2.5 py-1 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-900 text-emerald-800 dark:text-emerald-400">
             Correct: {correctFirstTryCount + correctSlowCount}
           </span>
-          <span className="px-2.5 py-1 rounded-lg bg-rose-950/60 border border-rose-900 text-rose-400">
+          <span className="px-2.5 py-1 rounded-lg bg-rose-100 dark:bg-rose-950/60 border border-rose-300 dark:border-rose-900 text-rose-800 dark:text-rose-400">
             Incorrect: {incorrectCount}
           </span>
-          <span className="px-2.5 py-1 rounded-lg bg-amber-950/60 border border-amber-900 text-amber-400">
+          <span className="px-2.5 py-1 rounded-lg bg-amber-100 dark:bg-amber-950/60 border border-amber-300 dark:border-amber-900 text-amber-800 dark:text-amber-400">
             Stuck: {stuckCount}
           </span>
-          <span className="px-3 py-1 rounded-lg bg-cyan-950 border border-cyan-700 text-cyan-300 font-bold">
+          <span className="px-3 py-1 rounded-lg bg-cyan-100 dark:bg-cyan-950 border border-cyan-300 dark:border-cyan-700 text-cyan-900 dark:text-cyan-300 font-bold">
             Accuracy: {accuracyPercent}%
           </span>
         </div>
       </div>
 
       {/* Questions List for the Date */}
-      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-6 shadow-xl">
-        <h3 className="text-sm font-bold font-mono text-zinc-200 mb-4 flex items-center justify-between">
+      <div className="rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 p-6 shadow-xl">
+        <h3 className="text-sm font-bold font-mono text-zinc-800 dark:text-zinc-200 mb-4 flex items-center justify-between">
           <span>QUESTIONS LOGGED FOR {filterDate || 'ALL DATES'}</span>
           <span className="text-xs text-zinc-500 font-normal">
             Click "Send to Mistake Diary" for any wrong/stuck question
@@ -398,29 +398,29 @@ export const PYQDrillLogger: React.FC = () => {
             {filteredQuestions.map((q) => (
               <div
                 key={q.id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-zinc-950/80 border border-zinc-800/80 hover:border-zinc-700 transition-colors group"
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950/80 border border-slate-200 dark:border-zinc-800/80 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors group"
               >
                 <div className="space-y-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className="text-xs font-mono font-bold text-cyan-400">
+                    <span className="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400">
                       Q#{q.questionNumber}
                     </span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-800 text-zinc-300">
+                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
                       {q.questionType}
                     </span>
-                    <span className="text-xs font-mono font-semibold text-zinc-200">
+                    <span className="text-xs font-mono font-semibold text-zinc-800 dark:text-zinc-200">
                       {q.subject}
                     </span>
-                    <span className="text-xs text-zinc-400">
+                    <span className="text-xs text-zinc-500 dark:text-zinc-400">
                       • {q.topic}
                     </span>
                     {q.gateYear && (
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800">
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800">
                         {q.gateYear}
                       </span>
                     )}
                   </div>
-                  <div className="text-xs text-zinc-400 font-mono flex items-center gap-2">
+                  <div className="text-xs text-zinc-500 dark:text-zinc-400 font-mono flex items-center gap-2">
                     <span>Date: {q.date} (Day {q.dayNumber})</span>
                     <span>•</span>
                     <span>Time: {Math.floor(q.timeTakenSeconds / 60)}m {q.timeTakenSeconds % 60}s</span>
@@ -431,22 +431,22 @@ export const PYQDrillLogger: React.FC = () => {
                 <div className="flex items-center gap-2 self-end sm:self-center">
                   {/* Status Badge */}
                   {q.status === 'CORRECT_FIRST_TRY' && (
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-emerald-950 border border-emerald-700 text-emerald-400">
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-emerald-100 dark:bg-emerald-950 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-400">
                       Correct (&lt;2m)
                     </span>
                   )}
                   {q.status === 'CORRECT_SLOW' && (
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-cyan-950 border border-cyan-700 text-cyan-400">
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-cyan-100 dark:bg-cyan-950 border border-cyan-300 dark:border-cyan-700 text-cyan-800 dark:text-cyan-400">
                       Correct (Slow)
                     </span>
                   )}
                   {q.status === 'INCORRECT' && (
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-rose-950 border border-rose-700 text-rose-400">
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-rose-100 dark:bg-rose-950 border border-rose-300 dark:border-rose-700 text-rose-800 dark:text-rose-400">
                       Incorrect
                     </span>
                   )}
                   {q.status === 'UNATTEMPTED_STUCK' && (
-                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-amber-950 border border-amber-700 text-amber-400">
+                    <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-semibold bg-amber-100 dark:bg-amber-950 border border-amber-300 dark:border-amber-700 text-amber-800 dark:text-amber-400">
                       Stuck / Skipped
                     </span>
                   )}
@@ -455,7 +455,7 @@ export const PYQDrillLogger: React.FC = () => {
                   {(q.status === 'INCORRECT' || q.status === 'UNATTEMPTED_STUCK') && (
                     <button
                       onClick={() => setSendToMistakeModal(q)}
-                      className="px-2.5 py-1 rounded-lg bg-zinc-900 hover:bg-rose-950 text-rose-300 hover:text-rose-200 border border-zinc-700 hover:border-rose-600 text-xs font-mono transition-all flex items-center gap-1"
+                      className="px-2.5 py-1 rounded-lg bg-slate-200 dark:bg-zinc-900 hover:bg-rose-100 dark:hover:bg-rose-950 text-rose-700 dark:text-rose-300 border border-slate-300 dark:border-zinc-700 hover:border-rose-500 text-xs font-mono transition-all flex items-center gap-1 cursor-pointer"
                       title="Send to Mistake Diary"
                     >
                       <span>Error Log</span>
@@ -466,7 +466,7 @@ export const PYQDrillLogger: React.FC = () => {
                   {/* Delete button */}
                   <button
                     onClick={() => deletePYQ(q.id)}
-                    className="opacity-0 group-hover:opacity-100 p-1.5 rounded text-zinc-600 hover:text-rose-400 transition-opacity"
+                    className="opacity-0 group-hover:opacity-100 p-1.5 rounded text-zinc-400 hover:text-rose-500 transition-opacity"
                     title="Delete entry"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -481,33 +481,33 @@ export const PYQDrillLogger: React.FC = () => {
       {/* Send to Mistake Diary Modal */}
       {sendToMistakeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-zinc-900 border border-rose-900 p-6 shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
-              <h3 className="text-base font-bold font-mono text-rose-400 flex items-center gap-2">
+          <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-zinc-900 border border-rose-300 dark:border-rose-900 p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-zinc-800 pb-3">
+              <h3 className="text-base font-bold font-mono text-rose-600 dark:text-rose-400 flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> SEND TO MISTAKE DIARY
               </h3>
               <button
                 onClick={() => setSendToMistakeModal(null)}
-                className="text-zinc-500 hover:text-zinc-300 font-mono text-sm"
+                className="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-300 font-mono text-sm cursor-pointer"
               >
                 Cancel
               </button>
             </div>
 
             <div>
-              <p className="text-xs text-zinc-300 font-mono">
+              <p className="text-xs text-zinc-700 dark:text-zinc-300 font-mono">
                 Transferring <strong>Q#{sendToMistakeModal.questionNumber}</strong> ({sendToMistakeModal.subject} - {sendToMistakeModal.topic}) into Cognitive Error Taxonomy.
               </p>
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-zinc-400 mb-1">
+              <label className="block text-xs font-mono text-zinc-600 dark:text-zinc-400 mb-1">
                 COGNITIVE ROOT CAUSE TAXONOMY
               </label>
               <select
                 value={selectedErrorCategory}
                 onChange={(e) => setSelectedErrorCategory(e.target.value as ErrorTaxonomy)}
-                className="w-full text-xs p-2.5 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 focus:outline-none focus:border-rose-500 font-mono"
+                className="w-full text-xs p-2.5 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-rose-500 font-mono"
               >
                 <option value="CALCULATION_ARITHMETIC">Calculation / Arithmetic Slip</option>
                 <option value="MISREAD_QUESTION">Misread Question / Missed 'NOT' / Units</option>
@@ -518,7 +518,7 @@ export const PYQDrillLogger: React.FC = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-mono text-zinc-400 mb-1">
+              <label className="block text-xs font-mono text-zinc-600 dark:text-zinc-400 mb-1">
                 USER BLUNDER NOTE ("WHY DID I MAKE THIS MISTAKE?")
               </label>
               <textarea
@@ -526,20 +526,20 @@ export const PYQDrillLogger: React.FC = () => {
                 onChange={(e) => setBlunderNote(e.target.value)}
                 placeholder="e.g. Forgot to divide fragment offset by 8; Confused SLR with LALR reduce action; Missed bipartite graph condition..."
                 rows={3}
-                className="w-full text-xs p-3 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 focus:outline-none focus:border-rose-500 font-mono resize-none"
+                className="w-full text-xs p-3 rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-300 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-rose-500 font-mono resize-none"
               />
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-zinc-800">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200 dark:border-zinc-800">
               <button
                 onClick={() => setSendToMistakeModal(null)}
-                className="px-4 py-2 rounded-xl bg-zinc-800 text-zinc-300 text-xs font-mono"
+                className="px-4 py-2 rounded-xl bg-slate-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-mono cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 onClick={handleConfirmSendToMistake}
-                className="px-4 py-2 rounded-xl bg-rose-950 hover:bg-rose-900 border border-rose-700 text-rose-300 text-xs font-mono font-bold transition-all"
+                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 dark:bg-rose-950 dark:hover:bg-rose-900 border border-rose-500 dark:border-rose-700 text-white dark:text-rose-300 text-xs font-mono font-bold transition-all cursor-pointer"
               >
                 Log Into Mistake Diary (+25 XP)
               </button>
