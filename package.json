@@ -1,0 +1,11 @@
+{
+  "name": "gate-pace-root",
+  "version": "1.0.0",
+  "description": "GATE-Pace 90-Day PSU Velocity Engine",
+  "scripts": {
+    "dev": "npm --prefix gate-pace run dev",
+    "build": "npm --prefix gate-pace run build",
+    "start": "npm --prefix gate-pace run start",
+    "lint": "npm --prefix gate-pace run lint"
+  }
+}
