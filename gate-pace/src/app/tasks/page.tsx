@@ -4,11 +4,12 @@ import React, { useState } from 'react';
 import { Navbar } from '@/components/Navbar';
 import { CommandCenter } from '@/components/CommandCenter';
 import { RoadmapView } from '@/components/RoadmapView';
+import { WeeklyPlanView } from '@/components/WeeklyPlanView';
 import { useGateStore } from '@/store/gateStore';
-import { Target, Map } from 'lucide-react';
+import { Target, Map, CalendarDays } from 'lucide-react';
 
 export default function TasksPage() {
-  const [taskView, setTaskView] = useState<'today' | 'roadmap'>('today');
+  const [taskView, setTaskView] = useState<'today' | 'weekly' | 'roadmap'>('today');
   const { setActiveDay } = useGateStore();
 
   return (
@@ -40,6 +41,17 @@ export default function TasksPage() {
               <span>Today's Command</span>
             </button>
             <button
+              onClick={() => setTaskView('weekly')}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
+                taskView === 'weekly'
+                  ? 'bg-cyan-600 text-white font-bold shadow-sm'
+                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
+              }`}
+            >
+              <CalendarDays className="w-3.5 h-3.5" />
+              <span>Weekly Plan</span>
+            </button>
+            <button
               onClick={() => setTaskView('roadmap')}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors ${
                 taskView === 'roadmap'
@@ -56,6 +68,8 @@ export default function TasksPage() {
         {/* View Content */}
         {taskView === 'today' ? (
           <CommandCenter />
+        ) : taskView === 'weekly' ? (
+          <WeeklyPlanView />
         ) : (
           <RoadmapView
             onSelectDay={(dayNum) => {

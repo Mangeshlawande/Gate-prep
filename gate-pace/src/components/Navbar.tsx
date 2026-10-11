@@ -16,7 +16,8 @@ import {
   BarChart2,
   Menu,
   X,
-  Bot
+  Bot,
+  CalendarDays
 } from 'lucide-react';
 
 export function getRankInfo(xp: number) {
@@ -60,8 +61,9 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { href: '/', label: 'Portal', icon: Home },
-    { href: '/syllabus', label: 'Syllabus', icon: BookOpen },
+    { href: '/plan', label: 'Plan', icon: CalendarDays },
     { href: '/tasks', label: 'Tasks', icon: CheckSquare },
+    { href: '/syllabus', label: 'Syllabus', icon: BookOpen },
     { href: '/dashboard', label: 'Dashboard', icon: BarChart2 },
     { href: '/bot', label: 'AI Guide', icon: Bot }
   ];
