@@ -28,6 +28,7 @@ import {
   Trash2,
   Compass
 } from 'lucide-react';
+import { MarkdownMessage } from './MarkdownMessage';
 
 interface ChatMessage {
   id: string;
@@ -331,9 +332,13 @@ export const GateBot: React.FC = () => {
                     </div>
 
                     {/* Message Body */}
-                    <div className="whitespace-pre-wrap font-sans text-xs sm:text-[13px] leading-relaxed">
-                      {msg.text}
-                    </div>
+                    {msg.sender === 'bot' ? (
+                      <MarkdownMessage content={msg.text} />
+                    ) : (
+                      <div className="font-mono text-xs sm:text-[13px] leading-relaxed whitespace-pre-wrap">
+                        {msg.text}
+                      </div>
+                    )}
 
                     {/* Dual-DB Retrieval Inspector Drawer for Bot Responses */}
                     {msg.data && (
