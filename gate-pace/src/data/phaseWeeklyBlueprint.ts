@@ -1,5 +1,6 @@
 // Comprehensive 90-Day Weekly Execution Plan & Hourly Task Architecture
 // Breaks down Phase 1 (Month 1), Phase 2 (Month 2), and Phase 3 (Month 3) into granular weekly build targets and 4-slot daily tasks
+import { GATE_90_DAYS_CURRICULUM } from './curriculum';
 
 export interface DailyHourlyTask {
   dayNumber: number;
@@ -1901,3 +1902,61 @@ export const PHASE_WEEKLY_BLUEPRINT: PhaseBlueprint[] = [
     ]
   }
 ];
+
+export function getDailyBlueprint(dayNumber: number): DailyHourlyTask {
+  for (const phase of PHASE_WEEKLY_BLUEPRINT) {
+    for (const week of phase.weeks) {
+      const found = week.days.find(d => d.dayNumber === dayNumber);
+      if (found) return found;
+    }
+  }
+
+  // Synthesize consistent 4-slot structure from curriculum for days not explicitly listed
+  const curr = GATE_90_DAYS_CURRICULUM.find(c => c.dayNumber === dayNumber) || GATE_90_DAYS_CURRICULUM[0];
+  const topics = curr.techFocus.split(',').map(t => t.trim()).filter(Boolean);
+
+  return {
+    dayNumber: curr.dayNumber,
+    dayTitle: curr.techFocus.split(':')[0] || `${curr.subject} Core Mastery`,
+    subject: curr.subject,
+    theorySlot: {
+      time: '07:00 AM – 10:00 AM (Theory)',
+      topics: topics.length > 0 ? topics : [curr.block1.focus],
+      keyFormulasOrConcepts: [
+        `Standard derivations and core theoretical definitions for ${curr.subject}`,
+        `Comprehensive concept synthesis for ${curr.techFocus}`
+      ]
+    },
+    practiceSlot: {
+      time: '11:30 AM – 02:00 PM (Practice)',
+      target: `Solve ${curr.pyqTarget} GATE PYQs on ${curr.techFocus}`,
+      problemTypes: [
+        'Single correct MCQs with subtle distractor options',
+        'Numerical Answer Type (NAT) precision calculations',
+        'Multiple Select Questions (MSQ) testing edge conditions'
+      ],
+      timeTarget: 'Max 2 minutes per problem.'
+    },
+    aptitudeMathSlot: {
+      time: '05:00 PM – 06:15 PM (Aptitude & Math)',
+      focus: curr.eveningFocus,
+      targetCount: 'Solve 15 standard practice problems.'
+    },
+    reviewSlot: {
+      time: '06:30 PM – 07:15 PM (Review)',
+      goal: `Document all conceptual traps, edge cases, and calculation slips for Day ${curr.dayNumber}.`,
+      trapFocus: `Scrub high-frequency confusion points and edge cases in ${curr.subject}.`
+    }
+  };
+}
+
+export function getWeekForDay(dayNumber: number): WeekBlueprint | null {
+  for (const phase of PHASE_WEEKLY_BLUEPRINT) {
+    for (const week of phase.weeks) {
+      if (week.days.some(d => d.dayNumber === dayNumber)) {
+        return week;
+      }
+    }
+  }
+  return null;
+}

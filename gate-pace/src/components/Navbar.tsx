@@ -61,7 +61,6 @@ export const Navbar: React.FC = () => {
 
   const navLinks = [
     { href: '/', label: 'Portal', icon: Home },
-    { href: '/plan', label: 'Plan', icon: CalendarDays },
     { href: '/tasks', label: 'Tasks', icon: CheckSquare },
     { href: '/syllabus', label: 'Syllabus', icon: BookOpen },
     { href: '/dashboard', label: 'Dashboard', icon: BarChart2 },
