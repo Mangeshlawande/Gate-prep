@@ -10,6 +10,7 @@
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4.0-38bdf8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 [![Zustand](https://img.shields.io/badge/Zustand-State_&_Offline_Persist-orange?style=for-the-badge)](https://zustand-demo.pmnd.rs/)
 [![Target: GATE 2027](https://img.shields.io/badge/Target-IIT_Madras_GATE_2027-teal?style=for-the-badge)](https://gate2027.iitm.ac.in)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMangeshlawande%2FGate-prep&root-directory=gate-pace)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 <br/>
@@ -18,7 +19,7 @@
 
 It eliminates manual friction and cognitive overload by unifying hourly study tracking, precision per-question PYQ pacing stopwatches, a structured mistake diary with cognitive error taxonomy, an interactive formula flashcard vault, and an embedded hybrid **Graph-RAG AI Guide Bot**.
 
-[Explore Features](#-key-features) • [Quick Start](#-quick-start) • [Architecture](#-architecture--project-structure) • [GATE 2027 Overview](#-official-gate-2027-intel) • [Roadmap Blueprint](#-90-day-study-architecture)
+[Explore Features](#-key-features) • [Quick Start](#-quick-start--installation) • [Deploy to Vercel](#-deploy-to-vercel) • [Architecture](#-architecture--project-structure) • [GATE 2027 Overview](#-official-gate-2027-intel) • [Roadmap Blueprint](#-90-day-study-architecture)
 
 </div>
 
@@ -42,6 +43,7 @@ It eliminates manual friction and cognitive overload by unifying hourly study tr
 - [Architecture & Project Structure](#-architecture--project-structure)
 - [Tech Stack](#-tech-stack)
 - [Quick Start & Installation](#-quick-start--installation)
+- [Deploy to Vercel](#-deploy-to-vercel)
 - [Keyboard Shortcuts & Pro Tips](#-keyboard-shortcuts--pro-tips)
 - [Data Privacy & Offline Vault](#-data-privacy--offline-vault)
 - [Contributing & License](#-contributing--license)
@@ -313,6 +315,51 @@ pip install reportlab
 python3 generate_gate_plan.py
 ```
 This generates `GATE_CS_90Day_PSU_Roadmap.pdf` in the root folder.
+
+---
+
+## 🌐 Deploy to Vercel
+
+### Option 1: 1-Click Deploy (Recommended)
+Deploy directly to Vercel with preconfigured root directory settings:
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMangeshlawande%2FGate-prep&root-directory=gate-pace)
+
+---
+
+### Option 2: Deploy via Vercel Web Dashboard
+
+Since the Next.js project is located in the `gate-pace/` subfolder, configure the **Root Directory** when importing:
+
+1. Go to [vercel.com](https://vercel.com) and log in.
+2. Click **Add New...** ➔ **Project**.
+3. Import your GitHub repository: `Mangeshlawande/Gate-prep`.
+4. In the **Configure Project** screen:
+   - **Framework Preset**: `Next.js` (detected automatically)
+   - **Root Directory**: Click **Edit** and choose `gate-pace` ⚠️ *(Critical step)*
+   - **Build & Output Settings**: Leave as default (`next build`, output `.next`)
+   - **Environment Variables**: None required (100% offline-first client storage)
+5. Click **Deploy**. Vercel will build and assign you a live `*.vercel.app` production URL!
+
+---
+
+### Option 3: Deploy via Vercel CLI
+
+You can also deploy directly from your local terminal:
+
+```bash
+# 1. Install Vercel CLI globally
+npm i -g vercel
+
+# 2. Navigate to the web application folder
+cd gate-pace
+
+# 3. Deploy preview
+vercel
+
+# 4. Deploy production
+vercel --prod
+```
 
 ---
 

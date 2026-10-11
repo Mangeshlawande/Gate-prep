@@ -42,3 +42,11 @@ npm run lint
 - **Canvas Confetti**
 - **Web Audio API** (in-browser synthesized audio cues and soundscapes)
 - **In-Memory Graph-RAG Engine** (Vector DB + Knowledge Graph DB)
+
+---
+
+## 🌐 Deploy to Vercel
+- When deploying the repo via Vercel Web Dashboard, set **Root Directory** to `gate-pace`.
+- Or deploy via CLI: `vercel` or `vercel --prod` from within this directory.
+- No environment variables required.
+
