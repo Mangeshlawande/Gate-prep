@@ -20,8 +20,8 @@
   - Block 2: Afternoon (11:30 – 14:00) Timed PYQ Drills (25 Qs target)
   - Block 3: Evening (17:00 – 19:00) Math & Aptitude + Mistake Scrub
 - [x] **2.4 Interactive Tasks & Subtasks Manager**:
-  - Add, edit, delete tasks and subtasks
-  - Status pipeline: `Todo` ➔ `In Progress` ➔ `Done`
+  - Direct 3-state status switcher: `[TODO]`, `[ACTIVE]`, `[DONE]`
+  - Real-time reactivity syncing with the GATE Aspirant profile badge
   - Inline notes and resource link attachments
   - Completion progress bar per block and day
 
@@ -74,6 +74,35 @@
 - [x] **8.1 Planned vs Actual Study Hours Burn-Down & Velocity Score**
 - [x] **8.2 Question Accuracy by Taxonomy** (MCQ vs MSQ vs NAT performance)
 - [x] **8.3 Offline Data Vault** (Full JSON backup export & restore)
+
+### 9. Official GATE 2027 Information Portal & Subject Weightages
+- [x] **9.1 Organizing Institute (IIT Madras)** highlights, dates (Feb 6–21, 2027), 3-hour CBT, 65 questions, 100 marks
+- [x] **9.2 Question Taxonomy**: MCQ (-0.33/-0.66), MSQ (No negative, no partial), NAT (Zero negative)
+- [x] **9.3 Subject-Wise Topic Weightage & Marks Distribution Table**:
+  - General Aptitude: 15 Marks
+  - Engineering Math: 13 Marks
+  - Discrete Math: ~8 Marks
+  - Programming & DS: ~10-12 Marks
+  - Algorithms: ~8-10 Marks
+  - Theory of Computation: ~8-10 Marks
+  - Compiler Design: ~4-5 Marks
+  - Operating Systems: ~8-10 Marks
+  - Databases: ~7-8 Marks
+  - Computer Organization: ~8-9 Marks
+  - Computer Networks: ~7-9 Marks
+  - Digital Logic: ~4-6 Marks
+- [x] **9.4 High-Yield Relevant Sample Questions & Solutions with Exam Traps**
+- [x] **9.5 Built-In Internet Search Integration** (Direct query triggers to Google & GateOverflow)
+
+### 10. Multi-Page Architecture & Light/Dark Theme Support
+- [x] **10.1 Dedicated Page Routing**:
+  - `/` — GATE 2027 Portal & Overview
+  - `/syllabus` — Detailed Syllabus Directory
+  - `/tasks` — Daily Tasks & 90-Day Matrix
+  - `/dashboard` — Performance Monitoring & Study Workspace
+- [x] **10.2 Global Navbar Links**: Instant seamless navigation across all 4 pages
+- [x] **10.3 Native Light & Dark Theme Support**: Fast toggle with persistent preferences
+- [x] **10.4 Bug Fix**: Fixed the "GATE Aspirant" rank element to include a live **Today's Tasks Progress Bar** (`Tasks: X/3 Done`) that updates dynamically whenever tasks are toggled between Todo, Active, and Done.
 
 ---
 

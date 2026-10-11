@@ -93,14 +93,19 @@ export interface GateState {
   lastActiveDate: string;
   soundEnabled: boolean;
   activeAmbience: 'none' | 'binaural_40hz' | 'brown_noise' | 'white_noise';
+  theme: 'dark' | 'light';
 
   // Actions
   setStartDate: (date: string) => void;
   setSelectedDate: (date: string) => void;
   setActiveDay: (day: number) => void;
+  setTheme: (theme: 'dark' | 'light') => void;
+  toggleTheme: () => void;
   
   // Task Actions
   toggleTaskStatus: (taskId: string, nextStatus?: 'todo' | 'in_progress' | 'done') => void;
+  setTaskStatus: (taskId: string, status: 'todo' | 'in_progress' | 'done') => void;
+  cycleTaskStatus: (taskId: string) => void;
   addTask: (task: Omit<TaskItem, 'id'>) => void;
   updateTaskNotes: (taskId: string, notes: string) => void;
   deleteTask: (taskId: string) => void;
@@ -218,24 +223,44 @@ export const useGateStore = create<GateState>()(
       lastActiveDate: todayStr(),
       soundEnabled: true,
       activeAmbience: 'none',
+      theme: 'dark',
 
       setStartDate: (date) => set({ startDate: date }),
       setSelectedDate: (date) => set({ selectedDate: date }),
       setActiveDay: (day) => set({ activeDay: Math.min(90, Math.max(1, day)) }),
 
-      toggleTaskStatus: (taskId, nextStatus) => {
+      setTheme: (theme) => {
+        set({ theme });
+        if (typeof document !== 'undefined') {
+          if (theme === 'dark') {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          } else {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+          }
+        }
+      },
+
+      toggleTheme: () => {
+        const next = get().theme === 'dark' ? 'light' : 'dark';
+        get().setTheme(next);
+      },
+
+      setTaskStatus: (taskId, status) => {
         const state = get();
         const currentTask = state.tasks[taskId];
-        if (!currentTask) return;
+        if (!currentTask || currentTask.status === status) return;
 
-        let status: 'todo' | 'in_progress' | 'done' = nextStatus || 'done';
-        if (!nextStatus) {
-          if (currentTask.status === 'todo') status = 'in_progress';
-          else if (currentTask.status === 'in_progress') status = 'done';
-          else status = 'todo';
+        const prevStatus = currentTask.status;
+        let xpDelta = 0;
+        if (status === 'done') {
+          xpDelta = prevStatus === 'in_progress' ? 30 : 50;
+        } else if (status === 'in_progress') {
+          xpDelta = prevStatus === 'done' ? -30 : 20;
+        } else if (status === 'todo') {
+          xpDelta = prevStatus === 'done' ? -50 : prevStatus === 'in_progress' ? -20 : 0;
         }
-
-        const isBecomingDone = status === 'done' && currentTask.status !== 'done';
 
         set((s) => ({
           tasks: {
@@ -243,17 +268,41 @@ export const useGateStore = create<GateState>()(
             [taskId]: {
               ...currentTask,
               status,
-              // If marked done, mark all subtasks completed
-              subtasks: isBecomingDone 
-                ? currentTask.subtasks.map(sub => ({ ...sub, completed: true }))
-                : currentTask.subtasks
+              subtasks:
+                status === 'done'
+                  ? currentTask.subtasks.map((sub) => ({ ...sub, completed: true }))
+                  : status === 'todo'
+                  ? currentTask.subtasks.map((sub) => ({ ...sub, completed: false }))
+                  : currentTask.subtasks
             }
           },
-          xp: isBecomingDone ? s.xp + 50 : s.xp
+          xp: Math.max(0, s.xp + xpDelta)
         }));
 
-        if (isBecomingDone && state.soundEnabled) {
+        if (status === 'done' && state.soundEnabled) {
           soundEngine.playSuccess();
+        } else if (status === 'in_progress' && state.soundEnabled) {
+          soundEngine.playXpGain();
+        }
+      },
+
+      cycleTaskStatus: (taskId) => {
+        const current = get().tasks[taskId];
+        if (!current) return;
+        const next =
+          current.status === 'todo'
+            ? 'in_progress'
+            : current.status === 'in_progress'
+            ? 'done'
+            : 'todo';
+        get().setTaskStatus(taskId, next);
+      },
+
+      toggleTaskStatus: (taskId, nextStatus) => {
+        if (nextStatus) {
+          get().setTaskStatus(taskId, nextStatus);
+        } else {
+          get().cycleTaskStatus(taskId);
         }
       },
 
@@ -555,7 +604,8 @@ export const useGateStore = create<GateState>()(
           streakCount: 1,
           lastActiveDate: todayStr(),
           soundEnabled: true,
-          activeAmbience: 'none'
+          activeAmbience: 'none',
+          theme: 'dark'
         });
       }
     }),
@@ -564,3 +614,15 @@ export const useGateStore = create<GateState>()(
     }
   )
 );
+
+export function getTodayTaskStats(tasks: Record<string, TaskItem>, dayNumber: number) {
+  const b1 = tasks[`day-${dayNumber}-b1`];
+  const b2 = tasks[`day-${dayNumber}-b2`];
+  const b3 = tasks[`day-${dayNumber}-b3`];
+  const list = [b1, b2, b3].filter(Boolean);
+  const done = list.filter((t) => t?.status === 'done').length;
+  const inProgress = list.filter((t) => t?.status === 'in_progress').length;
+  const total = 3;
+  const percent = Math.round((done / total) * 100);
+  return { done, inProgress, total, percent };
+}

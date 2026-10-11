@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGateStore } from '@/store/gateStore';
 import {
   BarChart3,
@@ -32,10 +32,15 @@ export const AnalyticsDashboard: React.FC = () => {
 
   const [importText, setImportText] = useState<string>('');
   const [importStatus, setImportStatus] = useState<string>('');
+  const [currentDateStr, setCurrentDateStr] = useState<string>(startDate);
+
+  useEffect(() => {
+    setCurrentDateStr(new Date().toISOString().split('T')[0]);
+  }, []);
 
   // 1. Velocity Computation
   const start = new Date(startDate);
-  const now = new Date();
+  const now = new Date(currentDateStr);
   const daysDiff = Math.max(1, Math.floor((now.getTime() - start.getTime()) / (1000 * 3600 * 24)) + 1);
 
   // Completed days: count how many days have all 3 blocks finished
