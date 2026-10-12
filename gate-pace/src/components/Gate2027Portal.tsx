@@ -228,18 +228,18 @@ export const Gate2027Portal: React.FC = () => {
           </div>
 
           {/* Subject Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs font-mono">
-            {subjectList.slice(0, 5).map((subj) => (
+          <div className="touch-scroll flex items-center gap-1.5 overflow-x-auto pb-1.5 scrollbar-none text-xs font-mono -mx-2 px-2 sm:mx-0 sm:px-0">
+            {subjectList.map((subj) => (
               <button
                 key={subj}
                 onClick={() => setSelectedSubjectFilter(subj)}
-                className={`px-2.5 py-1 rounded-lg transition-colors ${
+                className={`px-3 py-1.5 rounded-lg whitespace-nowrap shrink-0 transition-colors touch-manipulation cursor-pointer ${
                   selectedSubjectFilter === subj
                     ? 'bg-emerald-600 text-white font-bold'
-                    : 'bg-slate-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400'
+                    : 'bg-slate-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
-                {subj === 'ALL' ? 'All Subjects' : subj.split(' ')[0]}
+                {subj === 'ALL' ? 'All Subjects' : subj}
               </button>
             ))}
           </div>

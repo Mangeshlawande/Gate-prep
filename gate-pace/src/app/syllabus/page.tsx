@@ -140,24 +140,24 @@ export default function SyllabusPage() {
     <div className="min-h-screen bg-slate-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 flex flex-col font-sans transition-colors duration-200">
       <Navbar />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+      <main className="flex-1 max-w-7xl w-full mx-auto p-3 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 pb-24 md:pb-10">
         {/* Header Banner */}
-        <div className="rounded-3xl bg-gradient-to-br from-cyan-900/40 via-slate-900 to-zinc-950 border border-cyan-800/50 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
+        <div className="rounded-3xl bg-gradient-to-br from-cyan-900/40 via-slate-900 to-zinc-950 border border-cyan-800/50 p-5 sm:p-10 shadow-2xl relative overflow-hidden">
           <div className="relative z-10 max-w-3xl space-y-3">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950 border border-cyan-600/60 text-cyan-300 text-xs font-mono font-bold">
               <Sparkles className="w-3.5 h-3.5 text-cyan-400" /> OFFICIAL GATE 2027 SYLLABUS DIRECTORY
             </span>
-            <h1 className="text-3xl sm:text-4xl font-black text-white">
+            <h1 className="text-2xl sm:text-4xl font-black text-white">
               Official GATE 2027 Computer Science & IT Syllabus
             </h1>
-            <p className="text-sm text-zinc-300 font-mono">
+            <p className="text-xs sm:text-sm text-zinc-300 font-mono">
               Organized by IIT Madras across Section 1 through Section 10 and General Aptitude. Includes expected marks distribution and standard textbook guides.
             </p>
           </div>
         </div>
 
         {/* Search */}
-        <div className="relative max-w-lg">
+        <div className="relative w-full max-w-lg">
           <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
@@ -169,38 +169,38 @@ export default function SyllabusPage() {
         </div>
 
         {/* Sections List */}
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           {filteredSections.map((sec) => (
             <div
               key={sec.sectionNumber}
-              className="rounded-2xl p-6 bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 shadow-md space-y-4"
+              className="rounded-2xl p-4 sm:p-6 bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 shadow-md space-y-4"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-200 dark:border-zinc-800 pb-3">
                 <div className="flex items-center gap-2.5">
-                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800">
+                  <span className="px-2.5 py-1 rounded-lg text-xs font-mono font-bold bg-cyan-100 dark:bg-cyan-950 text-cyan-800 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800 shrink-0">
                     {sec.sectionNumber}
                   </span>
-                  <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-100">
+                  <h2 className="text-base sm:text-lg font-bold text-zinc-900 dark:text-zinc-100">
                     {sec.title}
                   </h2>
                 </div>
 
-                <div className="flex items-center gap-3 text-xs font-mono">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono">
                   <span className="px-2.5 py-1 rounded-md bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold">
                     {sec.marks}
                   </span>
-                  <span className="text-zinc-500 dark:text-zinc-400 hidden sm:inline">
+                  <span className="text-zinc-500 dark:text-zinc-400 text-[11px] sm:text-xs">
                     Ref: {sec.standardBook}
                   </span>
                 </div>
               </div>
 
               {/* Subsections & Official Topics */}
-              <div className="space-y-3">
+              <div className="space-y-2.5 sm:space-y-3">
                 {sec.subsections.map((sub, idx) => (
                   <div
                     key={idx}
-                    className="p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-850 space-y-1"
+                    className="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-850 space-y-1"
                   >
                     <h3 className="text-xs font-bold font-mono text-cyan-700 dark:text-cyan-400">
                       {sub.name}
@@ -213,7 +213,7 @@ export default function SyllabusPage() {
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-2 flex items-center justify-between text-xs font-mono">
+              <div className="pt-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs font-mono">
                 <a
                   href={`https://gateoverflow.in/search?q=${encodeURIComponent(sec.title)}`}
                   target="_blank"

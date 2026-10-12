@@ -41,14 +41,14 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ onSelectDay }) => {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-6 shadow-xl">
+      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-4 sm:p-6 shadow-xl">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800">
+              <span className="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800 shrink-0">
                 <Map className="w-4 h-4" />
               </span>
-              <h2 className="text-lg font-bold font-mono text-zinc-100">
+              <h2 className="text-base sm:text-lg font-bold font-mono text-zinc-100">
                 90-DAY PSU VELOCITY TIMELINE & CURRICULUM MATRIX
               </h2>
             </div>
@@ -65,7 +65,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ onSelectDay }) => {
         </div>
 
         {/* Phase Filter Tabs */}
-        <div className="flex flex-wrap items-center gap-2 mt-4">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none touch-scroll mt-4 -mx-2 px-2 sm:mx-0 sm:px-0">
           {[
             { id: 'ALL', label: 'All 90 Days' },
             { id: 'CORE_FOUNDATION', label: 'Phase 1: High-Yield Core (Days 1–30)' },
@@ -75,7 +75,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ onSelectDay }) => {
             <button
               key={phase.id}
               onClick={() => setSelectedPhase(phase.id)}
-              className={`px-3 py-1.5 rounded-xl text-xs font-mono transition-all ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-mono whitespace-nowrap transition-all touch-manipulation cursor-pointer ${
                 selectedPhase === phase.id
                   ? 'bg-cyan-950 text-cyan-300 border border-cyan-600 font-bold shadow-[0_0_8px_rgba(6,182,212,0.3)]'
                   : 'bg-zinc-950 text-zinc-400 border border-zinc-800 hover:text-zinc-200'
@@ -97,7 +97,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({ onSelectDay }) => {
             <div
               key={day.dayNumber}
               onClick={() => onSelectDay(day.dayNumber)}
-              className={`rounded-2xl p-5 border cursor-pointer transition-all hover:scale-[1.01] ${
+              className={`rounded-2xl p-4 sm:p-5 border cursor-pointer transition-all hover:scale-[1.01] touch-manipulation ${
                 isCurrentDay
                   ? 'bg-zinc-900 border-cyan-500 shadow-[0_0_20px_rgba(6,182,212,0.2)] ring-1 ring-cyan-500/50'
                   : status === 'DONE'

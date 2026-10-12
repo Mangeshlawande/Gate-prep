@@ -60,14 +60,14 @@ export const FormulaVault: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header & Mastery Status */}
-      <div className="rounded-2xl bg-zinc-900/90 border border-cyan-950 p-6 shadow-xl relative overflow-hidden">
+      <div className="rounded-2xl bg-zinc-900/90 border border-cyan-950 p-4 sm:p-6 shadow-xl relative overflow-hidden">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800">
+              <span className="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800 shrink-0">
                 <FileText className="w-4 h-4" />
               </span>
-              <h2 className="text-lg font-bold font-mono text-zinc-100">
+              <h2 className="text-base sm:text-lg font-bold font-mono text-zinc-100">
                 DAILY GATE CS FORMULA DECK & CHEAT SHEETS
               </h2>
             </div>
@@ -134,12 +134,12 @@ export const FormulaVault: React.FC = () => {
       </div>
 
       {/* Subject Filter Chips */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none touch-scroll -mx-3 px-3 sm:mx-0 sm:px-0">
         {allSubjects.map((subj) => (
           <button
             key={subj}
             onClick={() => { setSelectedSubject(subj); setFlashcardIndex(0); }}
-            className={`px-3 py-1.5 rounded-xl text-xs font-mono whitespace-nowrap transition-all ${
+            className={`px-3 py-1.5 rounded-xl text-xs font-mono whitespace-nowrap transition-all touch-manipulation cursor-pointer ${
               selectedSubject === subj
                 ? 'bg-cyan-950 text-cyan-300 border border-cyan-600 font-bold shadow-[0_0_8px_rgba(6,182,212,0.3)]'
                 : 'bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-zinc-200'
@@ -153,7 +153,7 @@ export const FormulaVault: React.FC = () => {
       {/* View Mode 1: Flashcard Drill Mode */}
       {viewMode === 'flashcard' && currentFlashcard && (
         <div className="max-w-2xl mx-auto">
-          <div className="rounded-2xl bg-zinc-900 border border-cyan-900/60 p-8 shadow-2xl flex flex-col items-center text-center relative overflow-hidden min-h-[380px] justify-between">
+          <div className="rounded-2xl bg-zinc-900 border border-cyan-900/60 p-4 sm:p-8 shadow-2xl flex flex-col items-center text-center relative overflow-hidden min-h-[380px] justify-between">
             {/* Card Subject & Index Header */}
             <div className="w-full flex items-center justify-between text-xs font-mono text-zinc-500 pb-3 border-b border-zinc-800">
               <span className="text-cyan-400 font-bold">{currentFlashcard.subject}</span>
@@ -218,31 +218,36 @@ export const FormulaVault: React.FC = () => {
             </div>
 
             {/* Flashcard Bottom Controls */}
-            <div className="w-full flex items-center justify-between pt-4 border-t border-zinc-800">
+            <div className="w-full flex items-center justify-between pt-4 border-t border-zinc-800 gap-2">
               <button
                 onClick={handlePrevFlashcard}
-                className="px-3 py-1.5 rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-xs font-mono"
+                className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-xs font-mono shrink-0 touch-manipulation cursor-pointer"
               >
-                Previous
+                Prev
               </button>
 
               <button
                 onClick={() => toggleFormulaMastery(currentFlashcard.id)}
-                className={`flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-mono font-bold transition-all ${
+                className={`flex items-center justify-center gap-1.5 px-2.5 sm:px-4 py-1.5 rounded-xl text-xs font-mono font-bold transition-all truncate touch-manipulation cursor-pointer ${
                   masteredFormulas.includes(currentFlashcard.id)
                     ? 'bg-emerald-950 border border-emerald-600 text-emerald-300'
                     : 'bg-zinc-800 text-zinc-300 hover:bg-emerald-950 hover:text-emerald-300'
                 }`}
               >
-                <CheckCircle className="w-3.5 h-3.5" />
-                {masteredFormulas.includes(currentFlashcard.id) ? 'Mastered ✓' : 'Mark as Mastered (+30 XP)'}
+                <CheckCircle className="w-3.5 h-3.5 shrink-0" />
+                <span className="hidden sm:inline">
+                  {masteredFormulas.includes(currentFlashcard.id) ? 'Mastered ✓' : 'Mark as Mastered (+30 XP)'}
+                </span>
+                <span className="sm:hidden">
+                  {masteredFormulas.includes(currentFlashcard.id) ? 'Mastered ✓' : 'Mastered (+30 XP)'}
+                </span>
               </button>
 
               <button
                 onClick={handleNextFlashcard}
-                className="px-3 py-1.5 rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-xs font-mono"
+                className="px-2.5 sm:px-3 py-1.5 rounded-xl bg-zinc-950 border border-zinc-800 text-zinc-400 hover:text-zinc-200 text-xs font-mono shrink-0 touch-manipulation cursor-pointer"
               >
-                Next Card
+                Next
               </button>
             </div>
           </div>
@@ -258,7 +263,7 @@ export const FormulaVault: React.FC = () => {
             return (
               <div
                 key={f.id}
-                className={`rounded-2xl p-5 border transition-all ${
+                className={`rounded-2xl p-4 sm:p-5 border transition-all ${
                   isMastered
                     ? 'bg-zinc-900/60 border-emerald-900/40'
                     : 'bg-zinc-900/90 border-zinc-800 hover:border-zinc-700'

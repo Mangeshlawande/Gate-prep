@@ -86,55 +86,55 @@ export const ResourcesHub: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Navigation Switcher */}
-      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-6 shadow-xl">
+      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-4 sm:p-6 shadow-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
           <div>
             <div className="flex items-center gap-2">
-              <span className="p-1.5 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-800">
+              <span className="p-1.5 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-800 shrink-0">
                 <BookOpen className="w-4 h-4" />
               </span>
-              <h2 className="text-lg font-bold font-mono text-zinc-100">
-                RESOURCE DIRECTORY & PERSONAL NOTES VAULT
+              <h2 className="text-base sm:text-lg font-bold font-mono text-zinc-100">
+                RESOURCE DIRECTORY & NOTES
               </h2>
             </div>
             <p className="text-xs text-zinc-400 mt-1 font-mono">
-              Curated GeeksforGeeks notes, GateOverflow archives, TCS calculator, and your tagged markdown notebooks.
+              Curated GeeksforGeeks notes, GateOverflow archives, TCS calculator, and tagged notebooks.
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-zinc-950 p-1 rounded-xl border border-zinc-800">
+          <div className="grid grid-cols-2 sm:flex sm:items-center gap-1.5 sm:gap-2 bg-zinc-950 p-1 rounded-xl border border-zinc-800 w-full sm:w-auto">
             <button
               onClick={() => setActiveTab('resources')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono text-center transition-colors touch-manipulation cursor-pointer ${
                 activeTab === 'resources'
                   ? 'bg-emerald-950 text-emerald-300 border border-emerald-800 font-bold'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              Curated Links (GfG / GateOverflow)
+              Curated Links
             </button>
             <button
               onClick={() => setActiveTab('notes')}
-              className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono text-center transition-colors touch-manipulation cursor-pointer ${
                 activeTab === 'notes'
                   ? 'bg-cyan-950 text-cyan-300 border border-cyan-800 font-bold'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              Personal Notes & Starred
+              Personal Notes
             </button>
           </div>
         </div>
 
         {/* Tab 1 Controls: Resources */}
         {activeTab === 'resources' && (
-          <div className="mt-4 pt-2 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="flex flex-wrap items-center gap-2">
+          <div className="mt-4 pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-none touch-scroll -mx-2 px-2 sm:mx-0 sm:px-0">
               {['ALL', 'GeeksforGeeks', 'GateOverflow', 'Official Tool', 'Textbook Guide'].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setResourceCategory(cat)}
-                  className={`px-3 py-1 rounded-xl text-xs font-mono transition-all ${
+                  className={`px-3 py-1 rounded-xl text-xs font-mono whitespace-nowrap transition-all touch-manipulation cursor-pointer ${
                     resourceCategory === cat
                       ? 'bg-emerald-950 text-emerald-300 border border-emerald-700 font-bold'
                       : 'bg-zinc-950 text-zinc-400 border border-zinc-800 hover:text-zinc-200'
@@ -252,7 +252,7 @@ export const ResourcesHub: React.FC = () => {
         <div>
           {filteredNotes.length === 0 ? (
             <div className="text-center py-12 rounded-2xl bg-zinc-900/60 border border-zinc-800 text-zinc-500 font-mono text-xs">
-              No notes found. Click "New Note" to record important derivations, shortcuts, or website takeaways.
+              No notes found. Click &quot;New Note&quot; to record important derivations, shortcuts, or website takeaways.
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -325,8 +325,8 @@ export const ResourcesHub: React.FC = () => {
 
       {/* Create Note Modal */}
       {showNoteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <form onSubmit={handleSaveNote} className="w-full max-w-lg rounded-2xl bg-zinc-900 border border-cyan-800 p-6 shadow-2xl space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-3 sm:p-4">
+          <form onSubmit={handleSaveNote} className="w-full max-w-lg rounded-2xl bg-zinc-900 border border-cyan-800 p-4 sm:p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
               <h3 className="text-sm font-bold font-mono text-cyan-300">
                 WRITE NEW STUDY NOTE / TAKEAWAY
@@ -340,7 +340,7 @@ export const ResourcesHub: React.FC = () => {
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-xs font-mono text-zinc-400 mb-1">SUBJECT</label>
                 <input
@@ -388,7 +388,7 @@ export const ResourcesHub: React.FC = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between pt-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
               <label className="flex items-center gap-2 cursor-pointer select-none text-xs font-mono text-zinc-300">
                 <input
                   type="checkbox"
@@ -400,17 +400,17 @@ export const ResourcesHub: React.FC = () => {
                 Mark as High Priority / Starred
               </label>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 justify-end">
                 <button
                   type="button"
                   onClick={() => setShowNoteModal(false)}
-                  className="px-3 py-1.5 rounded-xl bg-zinc-800 text-zinc-300 text-xs font-mono"
+                  className="px-3 py-2 rounded-xl bg-zinc-800 text-zinc-300 text-xs font-mono cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-1.5 rounded-xl bg-cyan-950 hover:bg-cyan-900 border border-cyan-700 text-cyan-300 font-mono text-xs font-bold"
+                  className="px-4 py-2 rounded-xl bg-cyan-950 hover:bg-cyan-900 border border-cyan-700 text-cyan-300 font-mono text-xs font-bold cursor-pointer"
                 >
                   Save Note (+15 XP)
                 </button>

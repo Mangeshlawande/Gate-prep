@@ -119,14 +119,14 @@ export const AnalyticsDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header & Velocity Indicator */}
-      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-6 shadow-xl">
+      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-4 sm:p-6 shadow-xl">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-4">
           <div>
             <div className="flex items-center gap-2">
               <span className="p-1.5 rounded-lg bg-cyan-950 text-cyan-400 border border-cyan-800">
                 <BarChart3 className="w-4 h-4" />
               </span>
-              <h2 className="text-lg font-bold font-mono text-zinc-100">
+              <h2 className="text-base sm:text-lg font-bold font-mono text-zinc-100">
                 SCHEDULE VELOCITY & ANALYTICS ENGINE
               </h2>
             </div>
@@ -138,39 +138,39 @@ export const AnalyticsDashboard: React.FC = () => {
           {/* Velocity Status Pill */}
           <div className="flex items-center gap-2">
             {velocityStatus === 'AHEAD' && (
-              <span className="px-3.5 py-1.5 rounded-xl bg-emerald-950 border border-emerald-600 text-emerald-300 font-mono text-xs font-bold shadow-[0_0_12px_rgba(16,185,129,0.3)]">
-                🚀 PACE: {delta} DAYS AHEAD OF SCHEDULE
+              <span className="px-3 py-1.5 rounded-xl bg-emerald-950 border border-emerald-600 text-emerald-300 font-mono text-[11px] sm:text-xs font-bold shadow-[0_0_12px_rgba(16,185,129,0.3)]">
+                🚀 PACE: {delta} DAYS AHEAD
               </span>
             )}
             {velocityStatus === 'ON_TRACK' && (
-              <span className="px-3.5 py-1.5 rounded-xl bg-cyan-950 border border-cyan-600 text-cyan-300 font-mono text-xs font-bold shadow-[0_0_12px_rgba(6,182,212,0.3)]">
-                ⚡ PACE: EXACTLY ON TRACK
+              <span className="px-3 py-1.5 rounded-xl bg-cyan-950 border border-cyan-600 text-cyan-300 font-mono text-[11px] sm:text-xs font-bold shadow-[0_0_12px_rgba(6,182,212,0.3)]">
+                ⚡ PACE: ON TRACK
               </span>
             )}
             {velocityStatus === 'BEHIND' && (
-              <span className="px-3.5 py-1.5 rounded-xl bg-rose-950 border border-rose-600 text-rose-300 font-mono text-xs font-bold shadow-[0_0_12px_rgba(244,63,94,0.3)]">
-                ⚠️ PACE: {Math.abs(delta)} DAYS BEHIND SCHEDULE
+              <span className="px-3 py-1.5 rounded-xl bg-rose-950 border border-rose-600 text-rose-300 font-mono text-[11px] sm:text-xs font-bold shadow-[0_0_12px_rgba(244,63,94,0.3)]">
+                ⚠️ PACE: {Math.abs(delta)} DAYS BEHIND
               </span>
             )}
           </div>
         </div>
 
         {/* Start Date Configuration */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
-          <div className="flex items-center gap-2">
+        <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
+          <div className="flex flex-wrap items-center gap-2">
             <span className="text-zinc-400">Preparation Start Date:</span>
             <input
               type="date"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
-              className="text-xs px-2.5 py-1 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 font-mono focus:outline-none focus:border-cyan-500 cursor-pointer"
+              className="text-xs px-2.5 py-1.5 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-200 font-mono focus:outline-none focus:border-cyan-500 cursor-pointer"
             />
           </div>
 
-          <div className="flex items-center gap-3 text-zinc-400">
-            <span>Calendar Days Elapsed: <strong>{daysDiff}</strong></span>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-zinc-400">
+            <span>Calendar Days: <strong>{daysDiff}</strong></span>
             <span>•</span>
-            <span>Days Fully Completed: <strong className="text-cyan-400">{completedDaysCount}</strong></span>
+            <span>Days Completed: <strong className="text-cyan-400">{completedDaysCount}</strong></span>
           </div>
         </div>
       </div>
@@ -229,7 +229,7 @@ export const AnalyticsDashboard: React.FC = () => {
       </div>
 
       {/* Accuracy by Question Type (MCQ vs MSQ vs NAT) */}
-      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-6 shadow-xl">
+      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-4 sm:p-6 shadow-xl">
         <h3 className="text-sm font-bold font-mono text-zinc-200 mb-4">
           ACCURACY BREAKDOWN BY QUESTION TAXONOMY
         </h3>
@@ -277,12 +277,12 @@ export const AnalyticsDashboard: React.FC = () => {
       </div>
 
       {/* Offline Data Vault (Export & Restore) */}
-      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-6 shadow-xl space-y-4">
+      <div className="rounded-2xl bg-zinc-900/90 border border-zinc-800 p-4 sm:p-6 shadow-xl space-y-4">
         <h3 className="text-sm font-bold font-mono text-zinc-200 border-b border-zinc-800 pb-2">
           OFFLINE DATA VAULT & BACKUP RESTORE
         </h3>
 
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <p className="text-xs text-zinc-300 font-mono">
               Your data is stored 100% locally in your browser (offline-first).
@@ -292,10 +292,10 @@ export const AnalyticsDashboard: React.FC = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <button
               onClick={handleExport}
-              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-950 hover:bg-cyan-900 border border-cyan-700 text-cyan-300 text-xs font-mono font-bold transition-all shadow-[0_0_10px_rgba(6,182,212,0.2)]"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-950 hover:bg-cyan-900 border border-cyan-700 text-cyan-300 text-xs font-mono font-bold transition-all touch-manipulation cursor-pointer shadow-[0_0_10px_rgba(6,182,212,0.2)]"
             >
               <Download className="w-3.5 h-3.5" /> EXPORT BACKUP (.JSON)
             </button>
@@ -305,7 +305,7 @@ export const AnalyticsDashboard: React.FC = () => {
                   resetAll();
                 }
               }}
-              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-zinc-950 hover:bg-rose-950 border border-zinc-800 hover:border-rose-800 text-zinc-500 hover:text-rose-400 text-xs font-mono transition-all"
+              className="flex items-center justify-center gap-2 px-3 py-2.5 rounded-xl bg-zinc-950 hover:bg-rose-950 border border-zinc-800 hover:border-rose-800 text-zinc-500 hover:text-rose-400 text-xs font-mono transition-all touch-manipulation cursor-pointer"
             >
               <RotateCcw className="w-3.5 h-3.5" /> Reset All
             </button>
@@ -327,7 +327,7 @@ export const AnalyticsDashboard: React.FC = () => {
             />
             <button
               onClick={handleImport}
-              className="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono self-start sm:self-auto h-auto transition-colors"
+              className="px-4 py-2.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-mono w-full sm:w-auto h-auto transition-colors touch-manipulation cursor-pointer"
             >
               Restore State
             </button>

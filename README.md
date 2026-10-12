@@ -327,7 +327,10 @@ Deploy directly to Vercel with preconfigured root directory settings:
 
 ---
 
-### Option 2: Deploy via Vercel Web Dashboard
+### 🚀 Live Production Deployment
+- **Live URL**: [https://gate-prep-alpha.vercel.app](https://gate-prep-alpha.vercel.app/)
+
+---
 
 Since the Next.js project is located in the `gate-pace/` subfolder, configure the **Root Directory** when importing:
 

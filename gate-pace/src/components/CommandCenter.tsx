@@ -129,10 +129,10 @@ export const CommandCenter: React.FC = () => {
             </div>
 
             {/* Quick 3-State Switcher */}
-            <div className="flex items-center gap-1 bg-slate-100 dark:bg-zinc-950 p-1 rounded-lg border border-slate-200 dark:border-zinc-800">
+            <div className="flex items-center gap-1 bg-slate-100 dark:bg-zinc-950 p-1 rounded-lg border border-slate-200 dark:border-zinc-800 self-start sm:self-auto">
               <button
                 onClick={() => handleStatusChange(task.id, 'todo')}
-                className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold transition-all ${
+                className={`px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-mono font-bold transition-all touch-manipulation cursor-pointer ${
                   task.status === 'todo'
                     ? 'bg-zinc-700 text-white shadow-sm'
                     : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200'
@@ -143,7 +143,7 @@ export const CommandCenter: React.FC = () => {
               </button>
               <button
                 onClick={() => handleStatusChange(task.id, 'in_progress')}
-                className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold transition-all ${
+                className={`px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-mono font-bold transition-all touch-manipulation cursor-pointer ${
                   task.status === 'in_progress'
                     ? 'bg-cyan-600 text-white shadow-sm animate-pulse'
                     : 'text-zinc-500 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400'
@@ -154,7 +154,7 @@ export const CommandCenter: React.FC = () => {
               </button>
               <button
                 onClick={() => handleStatusChange(task.id, 'done')}
-                className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold transition-all ${
+                className={`px-2.5 py-1 rounded text-[10px] sm:text-[11px] font-mono font-bold transition-all touch-manipulation cursor-pointer ${
                   task.status === 'done'
                     ? 'bg-emerald-600 text-white shadow-sm'
                     : 'text-zinc-500 dark:text-zinc-400 hover:text-emerald-600 dark:hover:text-emerald-400'
@@ -210,10 +210,10 @@ export const CommandCenter: React.FC = () => {
                   </label>
                   <button
                     onClick={() => deleteSubtask(task.id, sub.id)}
-                    className="opacity-0 group-hover:opacity-100 text-zinc-400 hover:text-rose-500 p-1 transition-opacity"
+                    className="opacity-70 sm:opacity-0 sm:group-hover:opacity-100 text-zinc-400 hover:text-rose-500 p-1.5 transition-opacity touch-manipulation cursor-pointer shrink-0"
                     title="Delete subtask"
                   >
-                    <Trash2 className="w-3 h-3" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
               ))}
@@ -281,7 +281,7 @@ export const CommandCenter: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Top Banner: Day Navigator, Dropdown Jumper & Progress */}
-      <div className="rounded-2xl bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 border border-slate-300 dark:border-cyan-950 p-6 shadow-xl relative overflow-hidden transition-colors">
+      <div className="rounded-2xl bg-gradient-to-br from-slate-50 via-white to-slate-100 dark:from-zinc-900 dark:via-zinc-950 dark:to-zinc-900 border border-slate-300 dark:border-cyan-950 p-4 sm:p-6 shadow-xl relative overflow-hidden transition-colors">
         {/* Visual Background Accent */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -301,23 +301,23 @@ export const CommandCenter: React.FC = () => {
                 {dayCurriculum.subject}
               </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight flex items-center gap-3">
+            <h1 className="text-xl sm:text-3xl font-black text-zinc-900 dark:text-zinc-100 tracking-tight flex flex-wrap items-baseline gap-1.5 sm:gap-3">
               <span>DAY {activeDay}</span>
-              <span className="text-zinc-400 dark:text-zinc-600 font-normal">:</span>
-              <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
+              <span className="text-zinc-400 dark:text-zinc-600 font-normal hidden xs:inline">:</span>
+              <span className="text-base sm:text-2xl font-bold bg-gradient-to-r from-zinc-800 to-zinc-600 dark:from-zinc-100 dark:to-zinc-400 bg-clip-text text-transparent">
                 {dailyBlueprint.dayTitle}
               </span>
             </h1>
-            <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-2xl font-mono">
+            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 max-w-2xl font-mono">
               Evening Focus: {dayCurriculum.eveningFocus}
             </p>
           </div>
 
           {/* Day Navigation & Calendar Date Sync */}
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full md:w-auto">
             {/* Calendar date input */}
             <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 text-xs w-full sm:w-auto justify-between shadow-sm">
-              <span className="text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+              <span className="text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5 shrink-0">
                 <CalendarDays className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
                 Date:
               </span>
@@ -330,11 +330,11 @@ export const CommandCenter: React.FC = () => {
             </div>
 
             {/* Prev / Day Jump Select / Next Day Controls */}
-            <div className="flex items-center gap-1 w-full sm:w-auto justify-center">
+            <div className="flex items-center gap-1.5 w-full sm:w-auto justify-between sm:justify-center">
               <button
                 onClick={handlePrevDay}
                 disabled={activeDay <= 1}
-                className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 hover:border-cyan-600 text-zinc-700 dark:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
+                className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 hover:border-cyan-600 text-zinc-700 dark:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer shrink-0 touch-manipulation"
                 title="Previous Day"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -344,7 +344,7 @@ export const CommandCenter: React.FC = () => {
               <select
                 value={activeDay}
                 onChange={(e) => setActiveDay(Number(e.target.value))}
-                className="px-3 py-2 rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+                className="flex-1 min-w-0 sm:flex-initial px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 text-xs sm:text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 cursor-pointer shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/40 sm:max-w-xs truncate touch-manipulation"
                 title="Jump to any Day 1 to 90"
               >
                 {GATE_90_DAYS_CURRICULUM.map((c) => (
@@ -357,7 +357,7 @@ export const CommandCenter: React.FC = () => {
               <button
                 onClick={handleNextDay}
                 disabled={activeDay >= 90}
-                className="p-2 rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 hover:border-cyan-600 text-zinc-700 dark:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm"
+                className="p-2 sm:p-2.5 rounded-xl bg-white dark:bg-zinc-900 border border-slate-300 dark:border-zinc-800 hover:border-cyan-600 text-zinc-700 dark:text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed transition-all shadow-sm cursor-pointer shrink-0 touch-manipulation"
                 title="Next Day"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -367,7 +367,7 @@ export const CommandCenter: React.FC = () => {
         </div>
 
         {/* Day Completion Progress Bar */}
-        <div className="mt-6 pt-4 border-t border-slate-200 dark:border-zinc-800/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-6 pt-4 border-t border-slate-200 dark:border-zinc-800/80 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
           <div className="w-full sm:max-w-md">
             <div className="flex items-center justify-between text-xs font-mono text-zinc-600 dark:text-zinc-400 mb-1.5">
               <span className="flex items-center gap-1.5">
@@ -387,26 +387,26 @@ export const CommandCenter: React.FC = () => {
           </div>
 
           {/* Quick Research & Practice shortcuts for today */}
-          <div className="flex items-center gap-2">
+          <div className="grid grid-cols-2 sm:flex sm:items-center gap-2 w-full sm:w-auto">
             <a
               href={`https://www.google.com/search?q=${encodeURIComponent(dayCurriculum.gfgSearchQuery)}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-300 dark:border-zinc-800 hover:border-emerald-500 text-xs font-mono text-emerald-700 dark:text-emerald-400 transition-all shadow-sm"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-300 dark:border-zinc-800 hover:border-emerald-500 text-xs font-mono text-emerald-700 dark:text-emerald-400 transition-all shadow-sm text-center"
             >
-              <BookOpen className="w-3.5 h-3.5" />
-              GeeksforGeeks Notes
-              <ExternalLink className="w-3 h-3" />
+              <BookOpen className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">GeeksforGeeks</span>
+              <ExternalLink className="w-3 h-3 shrink-0" />
             </a>
             <a
               href={`https://gateoverflow.in/search?q=${encodeURIComponent(dayCurriculum.gateOverflowTag)}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-300 dark:border-zinc-800 hover:border-cyan-500 text-xs font-mono text-cyan-700 dark:text-cyan-400 transition-all shadow-sm"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-lg bg-white dark:bg-zinc-900 hover:bg-slate-100 dark:hover:bg-zinc-800 border border-slate-300 dark:border-zinc-800 hover:border-cyan-500 text-xs font-mono text-cyan-700 dark:text-cyan-400 transition-all shadow-sm text-center"
             >
-              <Sparkles className="w-3.5 h-3.5" />
-              GateOverflow PYQs
-              <ExternalLink className="w-3 h-3" />
+              <Sparkles className="w-3.5 h-3.5 shrink-0" />
+              <span className="truncate">GateOverflow</span>
+              <ExternalLink className="w-3 h-3 shrink-0" />
             </a>
           </div>
         </div>
@@ -415,28 +415,28 @@ export const CommandCenter: React.FC = () => {
       {/* ========================================================================= */}
       {/* HOURLY TASK SPECIFICATION & DAILY BLUEPRINT (THE CORE 4-SLOT BREAKDOWN)   */}
       {/* ========================================================================= */}
-      <div className="rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 p-5 sm:p-6 shadow-md transition-colors space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-200 dark:border-zinc-800 pb-3">
+      <div className="rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 p-4 sm:p-6 shadow-md transition-colors space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-zinc-800 pb-3">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-cyan-600 text-white flex items-center justify-center font-mono font-bold text-xs shadow-sm">
+            <div className="w-8 h-8 rounded-lg bg-cyan-600 text-white flex items-center justify-center font-mono font-bold text-xs shadow-sm shrink-0">
               <Clock className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
-                <span>DAY {activeDay} HOURLY TASK ARCHITECTURE</span>
+              <h2 className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-zinc-100 flex flex-wrap items-center gap-1.5">
+                <span>DAY {activeDay} HOURLY TASKS</span>
                 <span className="text-xs font-normal text-cyan-600 dark:text-cyan-400">
-                  (8.25 Hours Focus Breakdown)
+                  (8.25 Hours Focus)
                 </span>
               </h2>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 font-mono">
-                Exact theory topics, practice targets, speed constraints, and high-yield traps to scrub.
+                Exact theory topics, practice targets, and high-yield traps to scrub.
               </p>
             </div>
           </div>
 
           <button
             onClick={() => setShowBlueprintDetails(!showBlueprintDetails)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono border border-slate-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            className="flex items-center justify-center gap-1.5 px-3 py-2 sm:py-1.5 rounded-xl text-xs font-mono border border-slate-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors w-full sm:w-auto cursor-pointer"
           >
             {showBlueprintDetails ? (
               <>
@@ -613,9 +613,9 @@ export const CommandCenter: React.FC = () => {
       {/* INTERACTIVE STUDY BLOCKS & CHECKLIST TRACKER                             */}
       {/* ========================================================================= */}
       <div>
-        <div className="mb-3 flex items-center justify-between">
+        <div className="mb-3 flex flex-col sm:flex-row sm:items-center justify-between gap-1.5">
           <h2 className="text-sm font-bold font-mono text-zinc-700 dark:text-zinc-300 uppercase tracking-wider flex items-center gap-2">
-            <Zap className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+            <Zap className="w-4 h-4 text-cyan-600 dark:text-cyan-400 shrink-0" />
             <span>Interactive Subtasks, Checklists & Study Notes</span>
           </h2>
           <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400">

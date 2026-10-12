@@ -255,7 +255,7 @@ function CodeBlockView({ code, language }: { code: string; language: string }) {
           )}
         </button>
       </div>
-      <div className="p-3 overflow-x-auto font-mono text-xs text-emerald-300 dark:text-cyan-300 leading-relaxed">
+      <div className="p-3 overflow-x-auto touch-scroll font-mono text-xs text-emerald-300 dark:text-cyan-300 leading-relaxed">
         <pre>{code}</pre>
       </div>
     </div>

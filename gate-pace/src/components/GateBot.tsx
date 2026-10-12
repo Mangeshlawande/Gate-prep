@@ -262,40 +262,40 @@ export const GateBot: React.FC = () => {
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center gap-1.5 bg-slate-200/80 dark:bg-zinc-900 p-1 rounded-xl border border-slate-300 dark:border-zinc-800 text-xs font-mono">
+        <div className="flex items-center gap-1.5 bg-slate-200/80 dark:bg-zinc-900 p-1 rounded-xl border border-slate-300 dark:border-zinc-800 text-xs font-mono overflow-x-auto scrollbar-none touch-scroll w-full sm:w-auto -mx-1 sm:mx-0 px-1">
           <button
             onClick={() => setActiveTab('chat')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors touch-manipulation cursor-pointer ${
               activeTab === 'chat'
                 ? 'bg-cyan-600 text-white font-bold shadow-sm'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
             }`}
           >
-            <Bot className="w-3.5 h-3.5" />
+            <Bot className="w-3.5 h-3.5 shrink-0" />
             <span>AI Guide Chat</span>
           </button>
 
           <button
             onClick={() => setActiveTab('vector')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors touch-manipulation cursor-pointer ${
               activeTab === 'vector'
                 ? 'bg-cyan-600 text-white font-bold shadow-sm'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
             }`}
           >
-            <Database className="w-3.5 h-3.5" />
+            <Database className="w-3.5 h-3.5 shrink-0" />
             <span>Vector DB ({vectorStats.count})</span>
           </button>
 
           <button
             onClick={() => setActiveTab('graph')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-colors cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg whitespace-nowrap transition-colors touch-manipulation cursor-pointer ${
               activeTab === 'graph'
                 ? 'bg-cyan-600 text-white font-bold shadow-sm'
                 : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-200'
             }`}
           >
-            <Network className="w-3.5 h-3.5" />
+            <Network className="w-3.5 h-3.5 shrink-0" />
             <span>Graph DB ({graphStats.nodes})</span>
           </button>
         </div>
@@ -305,9 +305,9 @@ export const GateBot: React.FC = () => {
       {activeTab === 'chat' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Main Chat Stream (8 cols) */}
-          <div className="lg:col-span-8 flex flex-col h-[650px] rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 shadow-xl overflow-hidden">
+          <div className="lg:col-span-8 flex flex-col h-[520px] sm:h-[620px] lg:h-[680px] rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 shadow-xl overflow-hidden">
             {/* Chat Messages Scrollable Box */}
-            <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4">
+            <div className="flex-1 p-3.5 sm:p-6 overflow-y-auto space-y-4 touch-scroll">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -368,12 +368,12 @@ export const GateBot: React.FC = () => {
                                 {msg.data.retrievedVectors.map((v, i) => (
                                   <div
                                     key={i}
-                                    className="flex items-center justify-between p-1.5 rounded bg-slate-50 dark:bg-zinc-950 text-[10px]"
+                                    className="flex items-center justify-between gap-2 p-1.5 rounded bg-slate-50 dark:bg-zinc-950 text-[10px]"
                                   >
-                                    <span className="truncate max-w-[240px] text-zinc-700 dark:text-zinc-300">
+                                    <span className="truncate flex-1 min-w-0 text-zinc-700 dark:text-zinc-300">
                                       {v.doc.title}
                                     </span>
-                                    <span className="text-cyan-600 dark:text-cyan-400 font-bold">
+                                    <span className="text-cyan-600 dark:text-cyan-400 font-bold shrink-0">
                                       Score: {(v.score * 100).toFixed(1)}%
                                     </span>
                                   </div>
@@ -460,7 +460,7 @@ export const GateBot: React.FC = () => {
                 <button
                   type="submit"
                   disabled={!inputQuery.trim() || isThinking}
-                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-500 hover:from-cyan-500 hover:to-teal-400 text-white font-mono text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-teal-500 hover:from-cyan-500 hover:to-teal-400 text-white font-mono text-xs font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md flex items-center gap-1.5 cursor-pointer touch-manipulation shrink-0"
                 >
                   <Send className="w-4 h-4" />
                   <span className="hidden sm:inline">Ask</span>
@@ -522,7 +522,7 @@ export const GateBot: React.FC = () => {
       {activeTab === 'vector' && (
         <div className="space-y-6">
           {/* Search & Actions Header */}
-          <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 shadow-xl space-y-4">
+          <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 shadow-xl space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-zinc-800 pb-4">
               <div>
                 <h2 className="text-base font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
@@ -536,7 +536,7 @@ export const GateBot: React.FC = () => {
 
               <button
                 onClick={() => setShowAddVectorModal(true)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-xs font-bold transition-all shadow-sm cursor-pointer"
+                className="flex items-center justify-center gap-1.5 px-3.5 py-2.5 sm:py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-xs font-bold transition-all shadow-sm cursor-pointer touch-manipulation w-full sm:w-auto"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add Custom Knowledge Chunk</span>
@@ -596,7 +596,7 @@ export const GateBot: React.FC = () => {
                 return (
                   <div
                     key={doc.id}
-                    className="p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-sm flex flex-col justify-between"
+                    className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 shadow-sm flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between gap-2 mb-2">
@@ -636,7 +636,7 @@ export const GateBot: React.FC = () => {
       {activeTab === 'graph' && (
         <div className="space-y-6">
           {/* Graph Query & Stats Header */}
-          <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 shadow-xl space-y-4">
+          <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-zinc-900/90 border border-slate-200 dark:border-zinc-800 shadow-xl space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-zinc-800 pb-4">
               <div>
                 <h2 className="text-base font-bold font-mono text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
@@ -651,7 +651,7 @@ export const GateBot: React.FC = () => {
 
               <button
                 onClick={() => setShowAddNodeModal(true)}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-all shadow-sm cursor-pointer"
+                className="flex items-center justify-center gap-1.5 px-3.5 py-2.5 sm:py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-mono text-xs font-bold transition-all shadow-sm cursor-pointer touch-manipulation w-full sm:w-auto"
               >
                 <Plus className="w-4 h-4" />
                 <span>Add Custom Entity Node</span>
@@ -761,8 +761,15 @@ export const GateBot: React.FC = () => {
                   return (
                     <div
                       key={n.id}
-                      onClick={() => setSelectedNode(n)}
-                      className={`p-4 rounded-xl border text-xs font-mono transition-all cursor-pointer ${
+                      onClick={() => {
+                        setSelectedNode(n);
+                        if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+                          setTimeout(() => {
+                            document.getElementById('graph-node-details')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                          }, 50);
+                        }
+                      }}
+                      className={`p-4 rounded-xl border text-xs font-mono transition-all touch-manipulation cursor-pointer ${
                         isSelected
                           ? 'bg-cyan-50 dark:bg-cyan-950/80 border-cyan-500 shadow-md ring-1 ring-cyan-500'
                           : 'bg-white dark:bg-zinc-900 border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700'
@@ -789,7 +796,7 @@ export const GateBot: React.FC = () => {
             </div>
 
             {/* Right: Selected Node Detail & Connections (5 cols) */}
-            <div className="lg:col-span-5">
+            <div className="lg:col-span-5" id="graph-node-details">
               {selectedNode ? (
                 <div className="p-5 rounded-2xl bg-white dark:bg-zinc-900 border border-cyan-500/50 shadow-xl space-y-4 font-mono text-xs">
                   <div>
@@ -882,7 +889,7 @@ export const GateBot: React.FC = () => {
                             <p className="font-bold text-zinc-800 dark:text-zinc-200">{res.title}</p>
                             <p className="text-[10px] text-zinc-500">{res.chapterOrTopic}</p>
                             <p className="text-[10px] text-zinc-600 dark:text-zinc-400 font-sans italic">
-                              "{res.clarityNotes}"
+                              &quot;{res.clarityNotes}&quot;
                             </p>
                           </div>
                         ))}
@@ -955,7 +962,7 @@ export const GateBot: React.FC = () => {
       {/* Modal: Add Custom Vector Document */}
       {showAddVectorModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 shadow-2xl space-y-4 font-mono text-xs">
+          <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-4 sm:p-6 shadow-2xl space-y-4 font-mono text-xs">
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-zinc-800 pb-3">
               <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                 <Database className="w-4 h-4 text-cyan-600" />
@@ -1045,7 +1052,7 @@ export const GateBot: React.FC = () => {
       {/* Modal: Add Custom Graph Node */}
       {showAddNodeModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-6 shadow-2xl space-y-4 font-mono text-xs">
+          <div className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-4 sm:p-6 shadow-2xl space-y-4 font-mono text-xs">
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-zinc-800 pb-3">
               <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                 <Network className="w-4 h-4 text-emerald-600" />
